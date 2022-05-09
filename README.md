@@ -112,12 +112,14 @@ postgres
 > Request Header should contain 
 > ``` Authorzation: Token token_generated_from_login```
 >
-> On a successful request, this endpoint would return a 204 status code and 
+> On a successful request, this endpoint would return a 204 status code
+>
 > 
-> ```\
+> 
 > On a failed request e.g, if the key "Authorization" is not provided in the header, this endpoint would return a 400 bad request status code
 > 
 > Possible Error Response, may return one or more of the following error
+
 > ```json
 > 
 > {
