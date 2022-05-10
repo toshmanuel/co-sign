@@ -34,5 +34,4 @@ flutter:
   uses-material-design: true
 # 
   assets:
-    - images/a_dot_burr.jpeg
-    - images/a_dot_ham.jpeg
+    - assets/svg/
