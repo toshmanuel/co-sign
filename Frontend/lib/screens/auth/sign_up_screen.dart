@@ -33,8 +33,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Center(
                 child: SvgPicture.asset(
                   AppVectors.logo,
-                  width: 100,
-                  height: 100,
+                  width: 150,
+                  height: 150,
                 ),
               ),
               Height10(),
@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: AppTextStyle.textSize36
                     .copyWith(color: AppColors.blackColor),
               ),
-              Height15(),
+              Height10(),
               Text(
                 signUpText,
                 style: AppTextStyle.textSize24
@@ -55,20 +55,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      cursorColor: AppColors.lightNeutral,
+                      cursorColor: AppColors.primaryColor,
                       autofocus: false,
                       controller: emailController,
                       decoration: AppDecorations.formStyle.copyWith(
                         label: Text(
                           'Email',
                           style: AppTextStyle.textSize15
-                              .copyWith(color: AppColors.lightNeutral),
+                              .copyWith(color: AppColors.primaryColor),
                         ),
                       ),
                     ),
                     Height10(),
                     TextFormField(
-                      cursorColor: AppColors.lightNeutral,
+                      cursorColor: AppColors.primaryColor,
                       controller: passwordController,
                       onSaved: (value) {
                         passwordController.text = value!;
@@ -80,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         label: Text(
                           'Password',
                           style: AppTextStyle.textSize15
-                              .copyWith(color: AppColors.lightNeutral),
+                              .copyWith(color: AppColors.primaryColor),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Height10(),
                     TextFormField(
-                      cursorColor: AppColors.lightNeutral,
+                      cursorColor: AppColors.primaryColor,
                       controller: passwordController,
                       onSaved: (value) {
                         passwordController.text = value!;
@@ -111,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         label: Text(
                           'Confirm Password',
                           style: AppTextStyle.textSize15
-                              .copyWith(color: AppColors.lightNeutral),
+                              .copyWith(color: AppColors.primaryColor),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -147,7 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: wasThisAMistakeText + '  ',
+                      text: alreadyHaveAnAccountText + '  ',
                       style: AppTextStyle.textSize13
                           .copyWith(color: AppColors.lightNeutral),
                       children: [
