@@ -1,0 +1,11 @@
+const String coSignText = 'Co Sign';
+const String welcomeText = 'Welcome to';
+const String loginText = 'Login';
+const String signUpText = 'Sign Up';
+const String resetPasswordText = 'Reset Password';
+const String emailText = 'Email';
+const String passwordText = 'Password';
+const String confirmPasswordText = 'Confirm Password';
+const String forgotPasswordText = 'Forget Password';
+const String dontHaveAnAccountText = 'Don\'t have an accound?';
+const String wasThisAMistakeText = 'Was this a mistake?';
