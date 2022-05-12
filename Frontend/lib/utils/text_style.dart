@@ -40,7 +40,7 @@ class AppTextStyle {
   static const textSize18 = TextStyle(
     fontSize: 18.0,
     fontFamily: 'Inter',
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w400,
   );
 
   static const textSize21 = TextStyle(
