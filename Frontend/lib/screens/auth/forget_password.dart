@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/screens/auth/auth.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
@@ -19,7 +20,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       body: SingleChildScrollView(
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 200, bottom: 200, right: 65, left: 65),
+              const EdgeInsets.only(top: 150, bottom: 200, right: 65, left: 65),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -57,7 +58,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
               Height15(),
               CustomButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(LoginScreen.id);
+                },
                 text: Text('Send Link',
                     style: AppTextStyle.textSize21
                         .copyWith(color: AppColors.whiteColor)),

@@ -19,13 +19,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
+  bool _obscureText1 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 200, bottom: 200, right: 65, left: 65),
+              const EdgeInsets.only(top: 150, bottom: 200, right: 65, left: 65),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -105,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       autofocus: false,
                       textInputAction: TextInputAction.done,
-                      obscureText: _obscureText,
+                      obscureText: _obscureText1,
                       decoration: AppDecorations.formStyle.copyWith(
                         label: Text(
                           'Confirm Password',
@@ -115,11 +116,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
-                              _obscureText = !_obscureText;
+                              _obscureText1 = !_obscureText1;
                             });
                           },
                           child: Icon(
-                            _obscureText
+                            _obscureText1
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             color: AppColors.lightNeutral,
@@ -132,7 +133,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               Height15(),
               CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(LoginScreen.id);
+                  },
                   text: Text('Sign Up',
                       style: AppTextStyle.textSize21
                           .copyWith(color: AppColors.whiteColor)),
