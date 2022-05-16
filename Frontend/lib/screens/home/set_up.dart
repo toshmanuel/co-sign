@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/utils/constant.dart';
-import 'package:frontend/utils/text_style.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
@@ -25,109 +23,128 @@ class _SetUpScreenState extends State<SetUpScreen> {
             children: [
               Center(
                 child: Text(
-                  howDoYouWantToStart,
+                  howItWorkText,
                   style: AppTextStyle.textSize22.copyWith(
-                      color: AppColors.blackColor, fontWeight: FontWeight.w600),
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
-              const Height30(),
-              const Divider(
-                height: 1,
-                color: AppColors.lightNeutral,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
                 children: [
-                  Column(
+                  Height20(),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Height15(),
-                      Text(
-                        createPersonalWallet,
-                        style: AppTextStyle.textSize21
-                            .copyWith(fontWeight: FontWeight.w400),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: const BoxDecoration(
+                          color: AppColors.skyBlueColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '1',
+                            style: AppTextStyle.textSize18.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor),
+                          ),
+                        ),
                       ),
-                      Height3(),
-                      Text(
-                        quickSetUp,
-                        style: AppTextStyle.textSize16
-                            .copyWith(color: AppColors.lightNeutral),
+                      Container(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width - 84),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, top: 5),
+                          child: Text(
+                            eachCosignerText,
+                            textAlign: TextAlign.justify,
+                            style: AppTextStyle.textSize18.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.lightNeutral),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  SvgPicture.asset(
-                    AppVectors.rightangle,
-                  )
                 ],
               ),
-              Height15(),
-              const Divider(
-                height: 1,
-                color: AppColors.lightNeutral,
-              ),
-              const Divider(
-                height: 1,
-                color: AppColors.lightNeutral,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
                 children: [
-                  Column(
+                  Height20(),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Height15(),
-                      Text(
-                        createSharedWallet,
-                        style: AppTextStyle.textSize21
-                            .copyWith(fontWeight: FontWeight.w400),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: const BoxDecoration(
+                          color: AppColors.skyBlueColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '2',
+                            style: AppTextStyle.textSize18.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor),
+                          ),
+                        ),
                       ),
-                      Height3(),
-                      Text(
-                        shareControlOver,
-                        style: AppTextStyle.textSize16
-                            .copyWith(color: AppColors.lightNeutral),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, top: 5),
+                        child: Text(
+                          allCosignerText,
+                          style: AppTextStyle.textSize18.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.lightNeutral),
+                        ),
                       ),
                     ],
                   ),
-                  SvgPicture.asset(
-                    AppVectors.rightangle,
-                  )
                 ],
               ),
-              Height15(),
-              const Divider(
-                height: 1,
-                color: AppColors.lightNeutral,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
                 children: [
-                  Column(
+                  Height20(),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Height15(),
-                      Text(
-                        importWallet,
-                        style: AppTextStyle.textSize21
-                            .copyWith(fontWeight: FontWeight.w400),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: const BoxDecoration(
+                          color: AppColors.skyBlueColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '3',
+                            style: AppTextStyle.textSize18.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor),
+                          ),
+                        ),
                       ),
-                      Height3(),
-                      Text(
-                        recoverWalletYou,
-                        style: AppTextStyle.textSize16
-                            .copyWith(color: AppColors.lightNeutral),
+                      Container(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width - 84),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, top: 5),
+                          child: Text(
+                            withAll3Text,
+                            textAlign: TextAlign.justify,
+                            style: AppTextStyle.textSize18.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.lightNeutral),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  SvgPicture.asset(
-                    AppVectors.rightangle,
-                  )
                 ],
               ),
-              Height15(),
+              
             ],
           ),
         ),

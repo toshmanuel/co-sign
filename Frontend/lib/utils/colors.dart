@@ -5,4 +5,5 @@ class AppColors {
   static const lightNeutral = Color(0xff777777);
   static const blackColor = Color(0xff000000);
   static const whiteColor = Color(0xffffffff);
+  static const skyBlueColor = Color(0x424395CF);
 }

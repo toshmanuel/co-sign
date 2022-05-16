@@ -1,8 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/screens/auth/forget_password.dart';
-import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/screens/screens.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';

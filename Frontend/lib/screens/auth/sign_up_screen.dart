@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/screens/auth/auth.dart';
-import 'package:frontend/screens/auth/forget_password.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
@@ -41,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Text(
                 coSignText,
                 style: AppTextStyle.textSize36
-                    .copyWith(color: AppColors.blackColor),
+                    .copyWith(color: AppColors.primaryColor),
               ),
               Height10(),
               Text(
