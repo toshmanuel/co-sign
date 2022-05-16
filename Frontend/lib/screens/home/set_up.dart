@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:frontend/screens/screens.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
@@ -153,7 +153,9 @@ class _SetUpScreenState extends State<SetUpScreen> {
                 ],
               ),
               CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(KeyCreation.id);
+                  },
                   text: Text('Continue',
                       style: AppTextStyle.textSize21
                           .copyWith(color: AppColors.whiteColor)),
