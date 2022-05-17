@@ -87,16 +87,6 @@ DATABASES = {
     
 }
 
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'HOST': config('DB_HOST'),
-#         'PORT': config('DB_PORT'),
-#         'NAME': config('DB_NAME'),
-#         'USER': config('DB_USER'),
-#         'PASSWORD': config('PASSWORD'),
-#     }
-# }
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
        'knox.auth.TokenAuthentication',
