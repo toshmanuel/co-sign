@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/utils.dart';
-import 'package:frontend/widgets/spacer.dart';
 import 'package:frontend/widgets/widgets.dart';
 
 class KeyCreation extends StatefulWidget {
@@ -31,7 +30,7 @@ class _KeyCreationState extends State<KeyCreation> {
                 children: [
                   Center(
                     child: Text(
-                      setupYourCoSignerText,
+                      summitYourText,
                       style: AppTextStyle.textSize22.copyWith(
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.w600),
@@ -88,7 +87,7 @@ class _KeyCreationState extends State<KeyCreation> {
               ),
               CustomButton(
                   onPressed: () {},
-                  text: Text('Create Key',
+                  text: Text('Summit Key',
                       style: AppTextStyle.textSize21
                           .copyWith(color: AppColors.whiteColor)),
                   height: 60,
