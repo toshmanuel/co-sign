@@ -15,4 +15,4 @@ const String allCosignerText = 'All cosigners exchange keystores.';
 const String withAll3Text = 'With all 3 keystores, each cosigner can set up the wallet on their device and view the balance and transactions.';
 const String createSharedWallet = 'Create shared wallet';
 const String recoverWalletYou = 'Recover a wallet you previously used.';
-const String summitYourText = 'Summit Your Key';
+const String summitYourText = 'Submit Your Key';

@@ -69,7 +69,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               Height15(),
               Center(
                 child: Text(
-                  'A link will will be send to your email for password reset',
+                  'A link will will be sent to your email for password reset',
                   style: AppTextStyle.textSize15
                       .copyWith(color: AppColors.lightNeutral),
                 ),
