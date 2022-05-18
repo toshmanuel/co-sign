@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'cosign.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': dj_database_url.config(default=f"postgresql://{config('DB_USER')}:{config('PASSWORD')}@{config('DB_HOST')}:{config('DB_PORT')}/{config('DB_NAME')}")
     
