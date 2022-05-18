@@ -27,17 +27,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               Center(
                 child: SvgPicture.asset(
                   AppVectors.logo,
-                  width: 100,
-                  height: 100,
+                  width: 150,
+                  height: 150,
                 ),
               ),
-              Height10(),
               Text(
                 coSignText,
                 style: AppTextStyle.textSize36
-                    .copyWith(color: AppColors.blackColor),
+                    .copyWith(color: AppColors.primaryColor),
               ),
-              Height15(),
+              Height10(),
               Text(
                 resetPasswordText,
                 style: AppTextStyle.textSize24
@@ -45,14 +44,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
               Height20(),
               TextFormField(
-                cursorColor: AppColors.lightNeutral,
+                cursorColor: AppColors.primaryColor,
                 autofocus: false,
                 controller: emailController,
                 decoration: AppDecorations.formStyle.copyWith(
                   label: Text(
                     'Email',
                     style: AppTextStyle.textSize15
-                        .copyWith(color: AppColors.lightNeutral),
+                        .copyWith(color: AppColors.primaryColor),
                   ),
                 ),
               ),
@@ -70,7 +69,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               Height15(),
               Center(
                 child: Text(
-                  'A link will will be send to your email for password reset',
+                  'A link will will be sent to your email for password reset',
                   style: AppTextStyle.textSize15
                       .copyWith(color: AppColors.lightNeutral),
                 ),

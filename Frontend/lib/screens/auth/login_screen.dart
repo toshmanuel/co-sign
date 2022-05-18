@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/screens/auth/forget_password.dart';
 import 'package:frontend/screens/screens.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
@@ -32,17 +31,17 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: SvgPicture.asset(
                   AppVectors.logo,
-                  width: 100,
-                  height: 100,
+                  width: 150,
+                  height: 150,
                 ),
               ),
               Height10(),
               Text(
                 coSignText,
                 style: AppTextStyle.textSize36
-                    .copyWith(color: AppColors.blackColor),
+                    .copyWith(color: AppColors.primaryColor),
               ),
-              Height15(),
+              Height10(),
               Text(
                 loginText,
                 style: AppTextStyle.textSize24
@@ -54,20 +53,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      cursorColor: AppColors.lightNeutral,
+                      cursorColor: AppColors.primaryColor,
                       autofocus: false,
                       controller: emailController,
                       decoration: AppDecorations.formStyle.copyWith(
                         label: Text(
                           'Email',
                           style: AppTextStyle.textSize15
-                              .copyWith(color: AppColors.lightNeutral),
+                              .copyWith(color: AppColors.primaryColor),
                         ),
                       ),
                     ),
                     Height10(),
                     TextFormField(
-                      cursorColor: AppColors.lightNeutral,
+                      cursorColor: AppColors.primaryColor,
                       controller: passwordController,
                       onSaved: (value) {
                         passwordController.text = value!;
@@ -79,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: Text(
                           'Password',
                           style: AppTextStyle.textSize15
-                              .copyWith(color: AppColors.lightNeutral),
+                              .copyWith(color: AppColors.primaryColor),
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -101,7 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Height15(),
               CustomButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SetUpScreen.id);
+                },
                 text: Text('Login',
                     style: AppTextStyle.textSize21
                         .copyWith(color: AppColors.whiteColor)),

@@ -26,8 +26,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Center(
                 child: SvgPicture.asset(
                   AppVectors.logo,
-                  width: 100,
-                  height: 100,
+                  width: 150,
+                  height: 150,
                 ),
               ),
               Height10(),
@@ -36,11 +36,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 style: AppTextStyle.textSize24
                     .copyWith(color: AppColors.lightNeutral),
               ),
-              Height15(),
+              Height10(),
               Text(
                 coSignText,
                 style: AppTextStyle.textSize36
-                    .copyWith(color: AppColors.blackColor),
+                    .copyWith(color: AppColors.primaryColor),
               ),
               Height15(),
               CustomButton(
