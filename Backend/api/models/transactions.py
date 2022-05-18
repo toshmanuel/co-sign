@@ -13,6 +13,6 @@ class Transactions(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
    
     def __str__(self):
-        return self.tx_id
+        return self.transaction_id
 
 

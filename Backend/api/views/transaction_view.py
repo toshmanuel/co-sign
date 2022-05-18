@@ -7,6 +7,7 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from buidl.tx import *
 from rest_framework.response import Response
+from rest_framework import status
 
 class CreateTransactionView(APIView):
     permission_classes = (AllowAny,)
@@ -62,4 +63,6 @@ class CreateTransactionView(APIView):
             transaction_id=txn.id(),
         )
 
-        return Response({'transaction': "printed"})
+        return Response(
+            {"status":status.HTTP_201_CREATED,"transaction":transaction}
+        )
