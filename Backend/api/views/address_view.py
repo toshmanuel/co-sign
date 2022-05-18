@@ -1,15 +1,16 @@
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from api.serializers.address import AddressSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.models.address import Addresses
 from django.contrib.auth.models import User
-from api.utils import generatescriptpub, generateservicekey
-from buidl.hd import *
+from api.utils import generateredeemscript, generateservicekey
 from buidl.script import RedeemScript
-from buidl.helper import *
+
 
 class GenerateAddress(APIView):
+    """This view generates address from the user keys and service key"""
     permission_classes = (AllowAny,)
     def post(self,request):
         key1 = request.data["key1"]
@@ -18,25 +19,23 @@ class GenerateAddress(APIView):
         user=User.objects.get(id=user_id)
         username=user.username
         service_key=generateservicekey(username)
-        script_pubkey= generatescriptpub(key1,key2,username)
-        addr=script_pubkey.address(network='testnet')
-        address=Addresses(address_generated=addr,user_id=user,script_pubkey=script_pubkey,service_key=service_key)
+        redeem= generateredeemscript(key1,key2,username)
+        addr=redeem.address(network='testnet')
+        address=Addresses(address_generated=addr,user_id=user,redeem_script=redeem,service_key=service_key)
         address.save()
+        
         return Response(
-            {"status":status.HTTP_201_CREATED,"address":addr}
+            {"status":status.HTTP_201_CREATED,"address":address.address_generated}
         )
 
-# class GetAddressListbyUser
-#Get address info, add the fund in the address
-
-
-
-
-#         {
-# "key1":"030f92f64022d0652e5ee52ea7808ac4094048e31d6d57253a97e704bca732965a",
-# "key2":"03fcc838ee61cf638f5542daa76a67fe82f2f3b907d9e3772636cf0f113f90093e",
-# "user_id":1
-
-# }
-
+class GetAddressInfo(APIView):
+    """This view gets the address,
+    script pubkey and redeem script, in the case where user want to import address to another wallet"""
+    permission_classes=(AllowAny,)
+    def get(self,request,address):
+        addressinfo=Addresses.objects.filter(address_generated=address)
+        serializer=AddressSerializer(addressinfo, many=True)
+        return Response(
+            {"address":serializer.data[0]["address_generated"], "redeemscript":serializer.data[0]["redeem_script"]}
+            )
 
