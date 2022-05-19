@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from buidl.tx import Tx, TxOut, TxIn, RedeemScript
+from buidl.hd import *
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -24,10 +25,9 @@ class CreateTransactionView(APIView):
         recipient = request.data['recipient']
         utxo = 0
         txn_inputs = []
-        txn_input_ids = []
+        
         for tran in transaction_request.json():
             if amount_to_send + 1000 >= utxo:
-                txn_input_ids.append(tran['txid'])
                 utxo = utxo + tran['value']
                 pub_list = list(address.redeem_script.split(' '))
                 pub_list.pop(0)
@@ -43,12 +43,36 @@ class CreateTransactionView(APIView):
 
         txn=Tx(2, txn_inputs, [output1, output2], network='testnet')
         
+        
+        if len(request.data['private_keys']) == 2:
+            p_k_WIF_1 = request.data['private_keys'][0]
+            p_k_WIF_2 = request.data['private_keys'][1]
+        else:
+            p_k_WIF_2 = address.service_key
+
+        try:
+            pkey1=PrivateKey.parse(p_k_WIF_1)
+            pkey2=PrivateKey.parse(p_k_WIF_2)
+        except:
+            return Response(
+                {
+                    "status":status.BAD_REQUEST,
+                    "error": "invalid private key, try validating the keys provided",
+                    }
+            )
+
+        sig1=txn.get_sig_legacy(0, pkey1, redeem_script=redeem)
+        sig2=txn.get_sig_legacy(0, pkey2, redeem_script=redeem)
+
+        inp.finalize_p2sh_multisig([sig1,sig2], redeem)
+
+        txn_hex = txn.serialize().hex()
 
         transaction = Transactions.objects.create(
             amount_sent=amount_to_send,
             recipient_address= recipient,
             address=address,
-            txn_input= ' '.join(txn_input_ids),
+            txn_hex= txn_hex,
             txn_fee=txn.fee(),
             transaction_id=txn.id(),
         )
@@ -56,13 +80,6 @@ class CreateTransactionView(APIView):
         return Response(
             {"status":status.HTTP_201_CREATED,"transaction":transaction}
         )
-
-class SignTransactionView(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
-
-    # def post(self, request):
-    #     transaction = Transactions.objects.get(id=)
 
 
     
