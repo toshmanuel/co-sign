@@ -1,4 +1,4 @@
-import requests
+from requests import Session
 from api.models.address import Addresses
 from api.models.transactions import Transactions
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +19,7 @@ class CreateTransactionView(APIView):
         address = Addresses.objects.get(address_generated=request.data['address'])
         address_generated = address.address_generated
     
-        transaction_request = requests.Session().get(url=f"https://blockstream.info/testnet/api/address/{address_generated}/utxo")
+        transaction_request = Session().get(url=f"https://blockstream.info/testnet/api/address/{address_generated}/utxo")
         amount_to_send = request.data['amount']
         recipient = request.data['recipient']
         utxo = 0
@@ -56,5 +56,13 @@ class CreateTransactionView(APIView):
         return Response(
             {"status":status.HTTP_201_CREATED,"transaction":transaction}
         )
+
+class SignTransactionView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    # def post(self, request):
+    #     transaction = Transactions.objects.get(id=)
+
 
     
