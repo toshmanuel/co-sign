@@ -10,8 +10,9 @@ class AuthenticationController extends GetxController {
   bool isLoading = false;
 
   UserRegister? userRegister;
+  UserLogin? userLogin;
 
-   siginUpQuery(BuildContext context, Map<String, dynamic> signUpDetails) async {
+  siginUpQuery(BuildContext context, Map<String, dynamic> signUpDetails) async {
     isLoading = true;
     update();
     final endPoint = '/register';
@@ -24,6 +25,26 @@ class AuthenticationController extends GetxController {
           context, MaterialPageRoute(builder: (_) => LoginScreen()));
       isLoading = false;
       print(userRegister?.email);
+    }
+    isLoading = false;
+    update();
+  }
+
+  signInQuery(BuildContext context, Map<String, dynamic> signInDetails) async {
+    isLoading = true;
+    update();
+    final endPoint = '/login';
+    final response = await _coSignApi.post(endPoint, body: signInDetails);
+    if (response?.statusCode == 201) {
+      userLogin = UserLogin.fromJson(response!.data);
+      update();
+      await _authServices.saveUserDetails(userLogin, isLogin: true);
+      isLoading = false;
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => SetUpScreen()));
+      isLoading = false;
+      print(userLogin?.username);
     }
     isLoading = false;
     update();
