@@ -1,22 +1,14 @@
+FROM python:3.8
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-FROM python:3.8   
-  
-ENV DockerHOME=/home/Backend  
-
-RUN mkdir -p $DockerHOME
-
-WORKDIR $DockerHOME
-
+COPY /api /api
+COPY /cosign /cosign
+COPY manage.py manage.py
 
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1  
-
-
-RUN pip install --upgrade pip  
-
-COPY . $DockerHOME
-
-RUN pip install -r requirements.txt
+ENV PYTHONUNBUFFERED 1
 
 EXPOSE 8000  
 
