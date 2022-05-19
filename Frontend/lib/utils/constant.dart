@@ -1,4 +1,15 @@
+import 'package:form_field_validator/form_field_validator.dart';
+
 const baseUrl = 'http://127.0.0.1:8000/api/v1/';
+
+final passwordValidator = MultiValidator(
+  [
+    RequiredValidator(errorText: 'Password Is Require'),
+    MinLengthValidator(6, errorText: 'password must be at least 6 digits long'),
+    // PatternValidator(r'(?=.*?[#?!@$%^&*-])',
+    // errorText: 'passwords must have at least one special character')
+  ],
+);
 
 const String coSignText = 'Co Sign';
 const String welcomeText = 'Welcome to';
