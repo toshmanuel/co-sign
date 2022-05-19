@@ -27,6 +27,22 @@ services:
       - "5050:80"
     restart: unless-stopped
 
+  backend:
+    container_name: backend
+    build:
+      context: .
+    depends_on:
+      - "postgres"
+    environment:
+      SECRET_KEY: test_key
+      DB_USER: postgres
+      PASSWORD: postgres
+      DB_NAME: cosign
+      DB_HOST: cosign-postgres
+      DB_PORT: 5432
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
 
 volumes:
   postgres:
