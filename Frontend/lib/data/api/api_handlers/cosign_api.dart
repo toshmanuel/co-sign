@@ -36,12 +36,14 @@ class CoSignApi {
     String? token,
   }) async {
     try {
+      print({'byna': string});
       final response = await dio.post(string,
           data: body,
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
+      print({'byna': e});
       // if (e.response!.data!['message'] == String) {
       //   showToastAnyWhere(e.response!.data!['message']);
       // } else if (e.response!.data!['message'] != String) {

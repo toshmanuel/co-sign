@@ -6,7 +6,6 @@ import 'package:frontend/services/services.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-
 class AuthenticationController extends GetxController {
   final CoSignApi _coSignApi = CoSignApi(baseUrl);
   bool isLoading = false;
@@ -14,25 +13,24 @@ class AuthenticationController extends GetxController {
   UserRegister? userRegister;
   UserLogin? userLogin;
 
+  final _authServices = AuthServices();
 
-  AuthServices _authServices = AuthServices();
-
-  siginUpQuery(BuildContext context, Map<String, dynamic> signUpDetails) async {
+  Future<bool> siginUpQuery(Map<String, dynamic> signUpDetails) async {
     isLoading = true;
-    update();
-    final endPoint = '/register';
+    // update();
+    const endPoint = '$baseUrl/register';
     final response = await _coSignApi.post(endPoint, body: signUpDetails);
+
     if (response?.statusCode == 200) {
       userRegister = UserRegister.fromJson(response!.data);
+
       isLoading = false;
 
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => LoginScreen()));
-      isLoading = false;
-      print(userRegister?.email);
+      return Future.value(true);
     }
     isLoading = false;
-    update();
+
+    return Future.value(false);
   }
 
   signInQuery(BuildContext context, Map<String, dynamic> signInDetails) async {

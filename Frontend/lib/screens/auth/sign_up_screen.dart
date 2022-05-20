@@ -177,8 +177,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         setState(() {
                           loading = true;
                         });
-                        await _authenticationController.siginUpQuery(
-                            context, SignUpVariable());
+                        final signedUp = await _authenticationController
+                            .siginUpQuery(SignUpVariable());
+                        if (signedUp) {
+                          // Navigator.pushReplacement(context,
+                          // MaterialPageRoute(builder: (_) => LoginScreen()));
+                        } else {}
                       } else {}
                     },
                     text: Text('Sign Up',

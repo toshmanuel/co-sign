@@ -13,7 +13,9 @@ class ApiUtils {
     );
   }
 }
-showToastAnyWhere(String message, {ToastGravity gravity = ToastGravity.TOP}) {
+
+showToastAnyWhere(String message,
+    {ToastGravity gravity = ToastGravity.BOTTOM}) {
   Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_LONG,
@@ -21,5 +23,5 @@ showToastAnyWhere(String message, {ToastGravity gravity = ToastGravity.TOP}) {
       timeInSecForIosWeb: 1,
       backgroundColor: AppColors.primaryColor,
       textColor: Colors.white,
-      fontSize: 16.0);
+      fontSize: 12.0);
 }
