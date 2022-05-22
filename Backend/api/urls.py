@@ -10,5 +10,5 @@ urlpatterns = [
   path('api/v1/login/', LoginAPI.as_view(), name='login'),
   path("api/v1/generateaddress",GenerateAddress.as_view()),
   path("api/v1/addressinfo/<address>",GetAddressInfo.as_view()),
-  path("api/v1/addresslist/<userid>",GetAddressByUser.as_view()),
+  path("api/v1/addresslist/",GetAddressByUser.as_view()),
 ]

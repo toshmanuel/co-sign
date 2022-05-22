@@ -1,4 +1,6 @@
 from rest_framework import status
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from api.serializers.address import AddressSerializer
 from rest_framework.response import Response
@@ -11,12 +13,18 @@ from buidl.script import RedeemScript
 
 class GenerateAddress(APIView):
     """This view generates address from the user keys and service key"""
-    permission_classes = (AllowAny,)
+    
+    
+    permission_classes = (IsAuthenticated,)
+    
     def post(self,request):
         key1 = request.data["key1"]
         key2 = request.data["key2"]
-        user_id= request.data['user_id']
+        user_id= request.user.id
         user=User.objects.get(id=user_id)
+
+        print(user_id)
+        # user=User.objects.get(id=user_id)
         service_key=generateservicekey()
         redeem= generateredeemscript(key1,key2,service_key)
         addr=redeem.address(network='testnet')
@@ -30,7 +38,7 @@ class GenerateAddress(APIView):
 class GetAddressInfo(APIView):
     """This view gets the address,
     script pubkey and redeem script, in the case where user want to import address to another wallet"""
-    permission_classes=(AllowAny,)
+    permission_classes=(IsAuthenticated,)
     def get(self,request,address):
         addressinfo=Addresses.objects.filter(address_generated=address)
         serializer=AddressSerializer(addressinfo, many=True)
@@ -40,9 +48,10 @@ class GetAddressInfo(APIView):
 
 class GetAddressByUser(APIView):
     """This view gets all address by a user"""
-    permission_classes=(AllowAny, )
+    permission_classes=(IsAuthenticated, )
 
-    def get(self,request,userid):
-        addressinfo=Addresses.objects.filter(user_id=userid)
+    def get(self,request):
+        user_id= request.user.id
+        addressinfo=Addresses.objects.filter(user_id=user_id)
         addr=[i.address_generated for i in addressinfo]
         return Response({"addresses":addr})
