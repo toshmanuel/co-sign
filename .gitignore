@@ -117,10 +117,10 @@ Backend/env
 
 # Rope project settings
 .ropeproject
-
+.idea
 # mkdocs documentation
 /site
-
+*.pyc
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -128,3 +128,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+api/__pycache__
+Backend/api/__pycache__/__init__.cpython-39.pyc
+Backend/api/__pycache__/admin.cpython-39.pyc
+Backend/api/__pycache__/apps.cpython-39.pyc
+Backend/api/__pycache__/models.cpython-39.pyc
+Backend/api/migrations/__pycache__/__init__.cpython-39.pyc
+Backend/cosign/__pycache__/__init__.cpython-39.pyc
+Backend/cosign/__pycache__/settings.cpython-39.pyc
+Backend/cosign/__pycache__/urls.cpython-39.pyc
+Backend/cosign/__pycache__/wsgi.cpython-39.pyc
