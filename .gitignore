@@ -137,3 +137,7 @@ Backend/cosign/__pycache__/__init__.cpython-39.pyc
 Backend/cosign/__pycache__/settings.cpython-39.pyc
 Backend/cosign/__pycache__/urls.cpython-39.pyc
 Backend/cosign/__pycache__/wsgi.cpython-39.pyc
+
+Backend/api/migrations
+Backend/api/__pycache__/admin.cpython-39.pyc
+Backend/cosign/__pycache__/
