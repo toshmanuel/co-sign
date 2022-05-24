@@ -1,12 +1,12 @@
-class GenerateAddress {
-  GenerateAddress({
+class GenerateAddresses {
+  GenerateAddresses({
     required this.status,
     required this.address,
   });
   late final int status;
   late final String address;
 
-  GenerateAddress.fromJson(Map<String, dynamic> json) {
+  GenerateAddresses.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     address = json['address'];
   }
