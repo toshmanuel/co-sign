@@ -17,19 +17,15 @@ class AuthenticationController extends GetxController {
 
   Future<bool> siginUpQuery(Map<String, dynamic> signUpDetails) async {
     isLoading = true;
-    // update();
+    update();
     const endPoint = '$baseUrl/register';
     final response = await _coSignApi.post(endPoint, body: signUpDetails);
-
-    if (response?.statusCode == 200) {
+    if (response?.statusCode == 201) {
       userRegister = UserRegister.fromJson(response!.data);
-
       isLoading = false;
-
       return Future.value(true);
     }
-    isLoading = false;
-
+    isLoading = true;
     return Future.value(false);
   }
 
@@ -45,7 +41,7 @@ class AuthenticationController extends GetxController {
       isLoading = false;
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => SetUpScreen()));
+          context, MaterialPageRoute(builder: (_) => const SetUpScreen()));
       isLoading = false;
       print(userLogin?.username);
     }
