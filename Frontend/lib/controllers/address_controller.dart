@@ -9,6 +9,7 @@ class AddressController extends GetxController {
 
   GenerateAddresses? generateAddresses;
   AddressInfo? addressInfo;
+  AddressList? addressList;
 
   bool isLoading = false;
 
@@ -49,5 +50,19 @@ class AddressController extends GetxController {
       addressInfo = AddressInfo.fromJson(response!.data);
     }
     return addressInfo;
+  }
+
+  getAddressListQuery() async {
+    getCurrentToken();
+    isLoading = true;
+    update();
+    const endPoint = '$baseUrl/addresslist/';
+    final response = await _coSignApi.get(endPoint, token: userToken);
+    if (response?.statusCode == 200) {
+      isLoading = false;
+      update();
+      addressList = AddressList.fromJson(response!.data);
+    }
+    return addressList;
   }
 }
