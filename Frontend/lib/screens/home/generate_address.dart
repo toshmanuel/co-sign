@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
-class KeyCreation extends StatefulWidget {
-  const KeyCreation({Key? key}) : super(key: key);
+class GenerateAddress extends StatefulWidget {
+  const GenerateAddress({Key? key}) : super(key: key);
   static const id = 'key_creation';
 
   @override
-  State<KeyCreation> createState() => _KeyCreationState();
+  State<GenerateAddress> createState() => _GenerateAddressState();
 }
 
-class _KeyCreationState extends State<KeyCreation> {
+class _GenerateAddressState extends State<GenerateAddress> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController keyController = TextEditingController();

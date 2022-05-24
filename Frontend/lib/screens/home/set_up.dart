@@ -154,7 +154,7 @@ class _SetUpScreenState extends State<SetUpScreen> {
               ),
               CustomButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(KeyCreation.id);
+                    Navigator.of(context).pushNamed(GenerateAddress.id);
                   },
                   text: Text('Continue',
                       style: AppTextStyle.textSize21
