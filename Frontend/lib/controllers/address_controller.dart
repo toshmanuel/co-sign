@@ -1,5 +1,5 @@
 import 'package:frontend/data/api/api.dart';
-import 'package:frontend/data/models/models.dart';
+import 'package:frontend/data/data.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
