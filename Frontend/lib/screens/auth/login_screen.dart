@@ -128,8 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           loading = true;
                         });
-                        await _authenticationController.signInQuery(
-                            context, SignInVariable());
+                        final signIn = await _authenticationController
+                            .signInQuery(SignInVariable());
+                        if (signIn) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const KeyCreation(),
+                            ),
+                          );
+                        }
                       } else {}
                     },
                     text: Text('Login',
