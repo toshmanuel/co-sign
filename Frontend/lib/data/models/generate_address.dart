@@ -1,20 +1,20 @@
 class GenerateAddress {
   GenerateAddress({
-    required this.key1,
-    required this.key2,
+    required this.status,
+    required this.address,
   });
-  late final String key1;
-  late final String key2;
+  late final int status;
+  late final String address;
 
   GenerateAddress.fromJson(Map<String, dynamic> json) {
-    key1 = json['key1'];
-    key2 = json['key2'];
+    status = json['status'];
+    address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['key1'] = key1;
-    _data['key2'] = key2;
+    _data['status'] = status;
+    _data['address'] = address;
     return _data;
   }
 }
