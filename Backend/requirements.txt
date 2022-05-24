@@ -35,4 +35,4 @@ SQLAlchemy==1.4.36
 sqlparse==0.4.2
 toml==0.10.2
 urllib3==1.26.9
-django-cors-headers==3.12.0
+
