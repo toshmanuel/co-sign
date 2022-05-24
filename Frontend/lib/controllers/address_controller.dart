@@ -8,6 +8,7 @@ class AddressController extends GetxController {
   final CoSignApi _coSignApi = CoSignApi(baseUrl);
 
   GenerateAddresses? generateAddresses;
+  AddressInfo? addressInfo;
 
   bool isLoading = false;
 
@@ -34,5 +35,19 @@ class AddressController extends GetxController {
     }
     isLoading = true;
     return Future.value(false);
+  }
+
+  getAddressInfoQuery(int? address) async {
+    getCurrentToken();
+    isLoading = true;
+    update();
+    const endPoint = '$baseUrl/addressinfo/';
+    final response = await _coSignApi.get(endPoint, token: userToken);
+    if (response?.statusCode == 200) {
+      isLoading = false;
+      update();
+      addressInfo = AddressInfo.fromJson(response!.data);
+    }
+    return addressInfo;
   }
 }
