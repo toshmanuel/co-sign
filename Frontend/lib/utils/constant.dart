@@ -32,3 +32,4 @@ const String createSharedWallet = 'Create shared wallet';
 const String recoverWalletYou = 'Recover a wallet you previously used.';
 const String summitYourText = 'Submit Your Key';
 const String username = 'username';
+const String tokenResponse = 'tokresponsen';
