@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'rest_framework.authtoken',
     'django.contrib.staticfiles',
     "rest_framework",
     "corsheaders",
@@ -89,16 +88,6 @@ DATABASES = {
     'default': dj_database_url.config(default=f"postgresql://{config('DB_USER')}:{config('PASSWORD')}@{config('DB_HOST')}:{config('DB_PORT')}/{config('DB_NAME')}")
     
 }
-
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'HOST': config('DB_HOST'),
-#         'PORT': config('DB_PORT'),
-#         'NAME': config('DB_NAME'),
-#         'USER': config('DB_USER'),
-#         'PASSWORD': config('PASSWORD'),
-#     }
-# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
