@@ -26,7 +26,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             Center(
               child: Text(
-                generateAddressText,
+                signTransText,
+                textAlign: TextAlign.center,
                 style: AppTextStyle.textSize22.copyWith(
                     color: AppColors.primaryColor, fontWeight: FontWeight.w600),
               ),
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavBar(selectedIndex: 0),
     );
   }
 }

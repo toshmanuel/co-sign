@@ -8,5 +8,8 @@ final Map<String, WidgetBuilder> routes = {
   ForgetPassword.id: (context) => const ForgetPassword(),
   SetUpScreen.id: (context) => const SetUpScreen(),
   GenerateAddress.id: (context) => const GenerateAddress(),
-  HomePage.id:(context) => const HomePage(),
+  HomePage.id: (context) => const HomePage(),
+  AboutScreen.id: (context) => const AboutScreen(),
+  AddressScreen.id: (context) => const AddressScreen(),
+  TransactonScreen.id: (context) => const TransactonScreen(),
 };
