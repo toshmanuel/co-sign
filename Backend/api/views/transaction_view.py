@@ -77,6 +77,9 @@ class CreateTransactionView(APIView):
             transaction_id=txn.id(),
         )
 
+        data = {'hex' : txn_hex}
+        tnx_pub_req = Session.post(url=f"https://blockstream.info/testnet/api/tx", data=data)
+
         return Response(
             {"status":status.HTTP_201_CREATED,"transaction":transaction}
         )
