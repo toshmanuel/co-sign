@@ -12,5 +12,4 @@ urlpatterns = [
   path('api/v1/transactions/', CreateTransactionView.as_view(), name='create_transaction'),
   path("api/v1/generateaddress",GenerateAddress.as_view()),
   path("api/v1/addressinfo/<address>",GetAddressInfo.as_view()),
-  path("api/v1/addresslist/<userid>",GetAddressByUser.as_view()),
-]
+  path("api/v1/addresslist/",GetAddressByUser.as_view()),

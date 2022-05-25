@@ -1,18 +1,20 @@
 class UserLogin {
-  String? username;
-  String? password;
-
-  UserLogin({this.username, this.password});
+  UserLogin({
+    required this.expiry,
+    required this.token,
+  });
+  late final String expiry;
+  late final String token;
 
   UserLogin.fromJson(Map<String, dynamic> json) {
-    username = json['username'];
-    password = json['password'];
+    expiry = json['expiry'];
+    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['password'] = this.password;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['expiry'] = expiry;
+    _data['token'] = token;
+    return _data;
   }
 }

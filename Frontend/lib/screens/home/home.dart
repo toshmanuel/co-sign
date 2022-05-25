@@ -1,2 +1,2 @@
-export 'key_creation.dart';
+export 'generate_address.dart';
 export 'set_up.dart';

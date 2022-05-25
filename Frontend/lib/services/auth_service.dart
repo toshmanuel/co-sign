@@ -26,14 +26,14 @@ class AuthServices {
 
   saveUserDetails(UserLogin? userLogin, {bool isLogin = false}) async {
     await setSharedPrefString(
-        username, userLogin?.username ?? '');
+        username, userLogin?.expiry ?? '');
     await setSharedPrefString(
-       username, userLogin?.username ?? '');
+       username, userLogin?.expiry ?? '');
 
     await setSharedPrefString(
-        username, userLogin?.username ?? '');
+        username, userLogin?.expiry ?? '');
     if (isLogin) {
-      await setSharedPrefString(username, userLogin?.username ?? '');
+      await setSharedPrefString(tokenResponse, userLogin?.token ?? '');
     }
    // await setSharedPrefInt(username, userLogin?.username ?? '');
 
