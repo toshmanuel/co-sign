@@ -112,6 +112,7 @@ env.bak/
 venv.bak/
 /env
 Backend/env
+./api/migrations
 
 # Spyder project settings
 .spyderproject
