@@ -1,14 +1,11 @@
 from rest_framework import status
-from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny
 from api.serializers.address import AddressSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.models.address import Addresses
 from django.contrib.auth.models import User
 from api.utils import generateredeemscript, generateservicekey
-from buidl.script import RedeemScript
 
 
 class GenerateAddress(APIView):
