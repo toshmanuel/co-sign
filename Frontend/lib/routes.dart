@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/auth/auth.dart';
-import 'package:frontend/screens/home/home.dart';
+import 'package:frontend/screens/screens.dart';
 
 final Map<String, WidgetBuilder> routes = {
   LoginScreen.id: (context) => const LoginScreen(),
@@ -9,4 +8,5 @@ final Map<String, WidgetBuilder> routes = {
   ForgetPassword.id: (context) => const ForgetPassword(),
   SetUpScreen.id: (context) => const SetUpScreen(),
   GenerateAddress.id: (context) => const GenerateAddress(),
+  HomePage.id:(context) => const HomePage(),
 };
