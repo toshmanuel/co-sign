@@ -13,7 +13,6 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(selectedIndex: 3),
     );
   }
 }

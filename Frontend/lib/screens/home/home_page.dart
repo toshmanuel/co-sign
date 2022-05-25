@@ -19,8 +19,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding:
-            const EdgeInsets.only(top: 80, bottom: 200, right: 65, left: 65),
+        padding: const EdgeInsets.only(bottom: 200, right: 65, left: 65),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -28,8 +27,8 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 signTransText,
                 textAlign: TextAlign.center,
-                style: AppTextStyle.textSize22.copyWith(
-                    color: AppColors.primaryColor, fontWeight: FontWeight.w600),
+                style: AppTextStyle.textSize24.copyWith(
+                    color: AppColors.primaryColor, fontWeight: FontWeight.bold),
               ),
             ),
             CustomButton(
@@ -51,7 +50,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(selectedIndex: 0),
     );
   }
 }

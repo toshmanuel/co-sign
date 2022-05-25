@@ -13,7 +13,6 @@ class _TransactonScreenState extends State<TransactonScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(selectedIndex: 2),
     );
   }
 }
