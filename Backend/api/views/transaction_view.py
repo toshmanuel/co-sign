@@ -25,9 +25,11 @@ class CreateTransactionView(APIView):
         recipient = request.data['recipient']
         utxo = 0
         txn_inputs = []
+
         
         for tran in transaction_request.json():
             if amount_to_send + 1000 >= utxo:
+
                 utxo = utxo + tran['value']
                 pub_list = list(address.redeem_script.split(' '))
                 pub_list.pop(0)
@@ -43,6 +45,7 @@ class CreateTransactionView(APIView):
 
         txn=Tx(2, txn_inputs, [output1, output2], network='testnet')
         
+
         
         if len(request.data['private_keys']) == 2:
             p_k_WIF_1 = request.data['private_keys'][0]
@@ -72,7 +75,9 @@ class CreateTransactionView(APIView):
             amount_sent=amount_to_send,
             recipient_address= recipient,
             address=address,
+
             txn_hex= txn_hex,
+
             txn_fee=txn.fee(),
             transaction_id=txn.id(),
         )
@@ -83,6 +88,4 @@ class CreateTransactionView(APIView):
         return Response(
             {"status":status.HTTP_201_CREATED,"transaction":transaction}
         )
-
-
     
