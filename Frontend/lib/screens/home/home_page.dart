@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
@@ -40,7 +41,9 @@ class _HomePageState extends State<HomePage> {
               width: 335,
             ),
             CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, GenerateAddressTwo.id);
+              },
               text: Text('Generate with two public key',
                   style: AppTextStyle.textSize18
                       .copyWith(color: AppColors.whiteColor)),
