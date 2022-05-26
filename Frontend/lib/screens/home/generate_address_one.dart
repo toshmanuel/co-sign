@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
-class GenerateAddressTwo extends StatefulWidget {
-  const GenerateAddressTwo({Key? key}) : super(key: key);
-  static const id = 'gen_address_two';
+class GenerateAddressOne extends StatefulWidget {
+  const GenerateAddressOne({Key? key}) : super(key: key);
+  static const id = 'gen_address_one';
 
   @override
-  State<GenerateAddressTwo> createState() => _GenerateAddressTwoState();
+  State<GenerateAddressOne> createState() => _GenerateAddressOneState();
 }
 
-class _GenerateAddressTwoState extends State<GenerateAddressTwo> {
+class _GenerateAddressOneState extends State<GenerateAddressOne> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController keyController = TextEditingController();
@@ -29,7 +29,7 @@ class _GenerateAddressTwoState extends State<GenerateAddressTwo> {
               children: [
                 Center(
                   child: Text(
-                    summitYourKeysText,
+                    summitYourText,
                     style: AppTextStyle.textSize22.copyWith(
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.w600),
@@ -46,20 +46,7 @@ class _GenerateAddressTwoState extends State<GenerateAddressTwo> {
                         controller: emailController,
                         decoration: AppDecorations.formStyle.copyWith(
                           label: Text(
-                            'Public Key 1',
-                            style: AppTextStyle.textSize15
-                                .copyWith(color: AppColors.primaryColor),
-                          ),
-                        ),
-                      ),
-                      Height15(),
-                      TextFormField(
-                        cursorColor: AppColors.primaryColor,
-                        autofocus: false,
-                        controller: keyController,
-                        decoration: AppDecorations.formStyle.copyWith(
-                          label: Text(
-                            'Public Key 2',
+                            'Public Key',
                             style: AppTextStyle.textSize15
                                 .copyWith(color: AppColors.primaryColor),
                           ),

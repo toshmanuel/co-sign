@@ -15,7 +15,6 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController keyController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +32,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, GenerateAddressOne.id);
+              },
               text: Text('Generate with one public key',
                   style: AppTextStyle.textSize18
                       .copyWith(color: AppColors.whiteColor)),
