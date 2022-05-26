@@ -1,5 +1,6 @@
 class AppVectors {
   static const String logo = 'assets/svg/logo.svg';
+  static const String whiteLogo = 'assets/svg/white_logo.svg';
   static const String rightangle = 'assets/svg/caret-right.svg';
   static const String homeLogo = 'assets/svg/home.svg';
   static const String keyLogo = 'assets/svg/key.svg';

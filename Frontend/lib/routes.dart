@@ -16,4 +16,5 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.id: (context) => const HomeScreen(),
   AddressInfo.id: (context) => const AddressInfo(),
   AddressList.id: (context) => const AddressList(),
+  SplashScreen.id: (context) => const SplashScreen(),
 };

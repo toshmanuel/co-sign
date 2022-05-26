@@ -36,3 +36,4 @@ const String generateAddressText = 'Generate Address';
 const String signTransText = 'Sign Transaction Address';
 const String username = 'username';
 const String tokenResponse = 'tokresponsen';
+const String isLoggin = 'IsLoggin';

@@ -17,33 +17,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 150, bottom: 200),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: SvgPicture.asset(
-                  AppVectors.logo,
-                  width: 150,
-                  height: 150,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 50, bottom: 200),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Column(
+              children: [
+                Center(
+                  child: SvgPicture.asset(
+                    AppVectors.logo,
+                    width: 150,
+                    height: 150,
+                  ),
                 ),
-              ),
-              Height10(),
-              Text(
-                welcomeText,
-                style: AppTextStyle.textSize24
-                    .copyWith(color: AppColors.lightNeutral),
-              ),
-              Height10(),
-              Text(
-                coSignText,
-                style: AppTextStyle.textSize36
-                    .copyWith(color: AppColors.primaryColor),
-              ),
-              Height15(),
-              CustomButton(
+                Height10(),
+                Text(
+                  welcomeText,
+                  style: AppTextStyle.textSize24
+                      .copyWith(color: AppColors.lightNeutral),
+                ),
+                Height10(),
+                Text(
+                  coSignText,
+                  style: AppTextStyle.textSize36
+                      .copyWith(color: AppColors.primaryColor),
+                ),
+                Height15(),
+              ],
+            ),
+            Column(
+              children: [
+                CustomButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(LoginScreen.id);
                   },
@@ -51,19 +56,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: AppTextStyle.textSize21
                           .copyWith(color: AppColors.whiteColor)),
                   height: 60,
-                  width: 335),
-              Height30(),
-              CustomButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(SignUpScreen.id);
-                  },
-                  text: Text('Register',
-                      style: AppTextStyle.textSize21
-                          .copyWith(color: AppColors.whiteColor)),
-                  height: 60,
-                  width: 335),
-            ],
-          ),
+                  width: 335,
+                ),
+                Height50(),
+                CustomButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(SignUpScreen.id);
+                    },
+                    text: Text('Register',
+                        style: AppTextStyle.textSize21
+                            .copyWith(color: AppColors.whiteColor)),
+                    height: 60,
+                    width: 335),
+              ],
+            ),
+          ],
         ),
       ),
     );
