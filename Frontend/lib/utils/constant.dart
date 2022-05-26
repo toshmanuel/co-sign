@@ -24,10 +24,10 @@ const String dontHaveAnAccountText = 'Don\'t have an account?';
 const String alreadyHaveAnAccountText = 'Already have an account?';
 const String howItWorkText = 'How it works';
 const String eachCosignerText =
-    'Each cosigner needs to create their own key on their device.';
+    'Each cosigner needs to create their own key\n on their device.';
 const String allCosignerText = 'All cosigners exchange keystores.';
 const String withAll3Text =
-    'With all 3 keystores, each cosigner can set up the wallet on their device and view the balance and transactions.';
+    'With all 3 keystores, each cosigner can set up\n the wallet on their device and view the\n balance and transactions.';
 const String createSharedWallet = 'Create shared wallet';
 const String recoverWalletYou = 'Recover a wallet you previously used.';
 const String summitYourText = 'Submit Your Key';

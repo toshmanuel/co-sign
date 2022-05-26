@@ -6,4 +6,5 @@ class AppVectors {
   static const String keyLogo = 'assets/svg/key.svg';
   static const String transLogo = 'assets/svg/flip-vertical.svg';
   static const String contactLogo = 'assets/svg/contacts.svg';
+  static const String arrowLeft = 'assets/svg/arrow-left.svg';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 
@@ -20,20 +21,35 @@ class _GenerateAddressTwoState extends State<GenerateAddressTwo> {
     return Scaffold(
       body: Padding(
         padding:
-            const EdgeInsets.only(top: 80, bottom: 200, right: 65, left: 65),
+            const EdgeInsets.only(top: 80, bottom: 200, right: 30, left: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               children: [
-                Center(
-                  child: Text(
-                    summitYourKeysText,
-                    style: AppTextStyle.textSize22.copyWith(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      child: SvgPicture.asset(
+                        AppVectors.arrowLeft,
                         color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w600),
-                  ),
+                      ),
+                      onTap: () {
+                        goBack(context);
+                      },
+                    ),
+                    Center(
+                      child: Text(
+                        summitYourKeysText,
+                        style: AppTextStyle.textSize22.copyWith(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Width5(),
+                  ],
                 ),
                 Height50(),
                 Form(

@@ -30,7 +30,7 @@ class _AddressScreenState extends State<AddressScreen> {
             indicatorColor: AppColors.primaryColor,
             unselectedLabelColor: AppColors.lightNeutral,
             tabs: [
-              Tab(icon: Icon(Icons.info_outline), text: 'Address Info'),
+              Tab(icon: Icon(Icons.import_export), text: 'Address Import'),
               Tab(icon: Icon(Icons.list_alt_rounded), text: 'List Of Address')
             ],
           ),
