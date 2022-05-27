@@ -10,26 +10,28 @@ from api.utils import generateredeemscript, generateservicekey
 
 
 class GenerateAddress(APIView):
-    """This view generates address from the user keys and service key"""
+    """This view generates address for new users"""
 
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        key1 = request.data["key1"]
-        key2 = request.data["key2"]
+        pubkey1 = request.data["key1"]
+        pubkey2 = request.data["key2"]
         user_id = request.user.id
         user = User.objects.get(id=user_id)
 
         print(user_id)
         # user=User.objects.get(id=user_id)
         service_key = generateservicekey()
-        redeem = generateredeemscript(key1, key2, service_key)
+        redeem = generateredeemscript(pubkey1, pubkey2, service_key)
         addr = redeem.address(network="testnet")
         address = Addresses(
             address_generated=addr,
             user_id=user,
             redeem_script=redeem,
             service_key=service_key,
+            key1=pubkey1,
+            key2=pubkey2
         )
         address.save()
         return Response(
@@ -37,12 +39,11 @@ class GenerateAddress(APIView):
         )
 
 
-class ImportAddress(APIView):
+class ExportAddress(APIView):
     """This view gets the address,
-    script pubkey and redeem script, in the case where user want to import address to another wallet"""
+    script pubkey and redeem script, in the case where user want to export address to another wallet"""
 
-    # permission_classes=(IsAuthenticated,)
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, address):
         addressinfo = Addresses.objects.filter(address_generated=address)
@@ -69,7 +70,7 @@ class GetAddressByUser(APIView):
 
 
 class GetAddressInfo(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, address):
 
@@ -105,6 +106,28 @@ class GetAllUTXOByAddress(APIView):
         allutxo=sum(addresses_utxo)
 
         return Response(allutxo)
-        
 
-       
+class GenerateNewAddress(APIView):
+    """This view generates new address for users to avoid address reuse"""
+    permission_classes=(IsAuthenticated, )
+    def get(self,request):
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        addressinfo = Addresses.objects.get(user_id=user_id)
+        pubkey1=addressinfo.key1
+        pubkey2=addressinfo.key2
+        service_key = generateservicekey()
+        redeem = generateredeemscript(pubkey1, pubkey2, service_key)
+        addr = redeem.address(network="testnet")
+        address = Addresses(
+            address_generated=addr,
+            user_id=user,
+            redeem_script=redeem,
+            service_key=service_key,
+            key1=pubkey1,
+            key2=pubkey2
+        )
+        address.save()
+        return Response(
+            {"status": status.HTTP_201_CREATED, "address": address.address_generated}
+        )
