@@ -28,7 +28,7 @@ class _SetUpScreenState extends State<SetUpScreen> {
                     children: [
                       Center(
                         child: Text(
-                          howItWorkText,
+                          totalBalanceText,
                           style: AppTextStyle.textSize22.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w600),

@@ -22,7 +22,7 @@ const String confirmPasswordText = 'Confirm Password';
 const String forgotPasswordText = 'Forgot Password?';
 const String dontHaveAnAccountText = 'Don\'t have an account?';
 const String alreadyHaveAnAccountText = 'Already have an account?';
-const String howItWorkText = 'How it works';
+const String totalBalanceText = 'Total Balance';
 const String eachCosignerText =
     'Each cosigner needs to create their own key\n on their device.';
 const String allCosignerText = 'All cosigners exchange keystores.';
@@ -33,7 +33,7 @@ const String recoverWalletYou = 'Recover a wallet you previously used.';
 const String summitYourText = 'Submit Your Key';
 const String summitYourKeysText = 'Submit Your Keys';
 const String generateAddressText = 'Generate Address';
-const String signTransText = 'Sign Transaction Address';
+const String helloThereText = 'Hello there 🧐';
 const String username = 'username';
 const String tokenResponse = 'tokresponsen';
 const String isLoggin = 'IsLoggin';

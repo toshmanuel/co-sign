@@ -7,4 +7,7 @@ class AppVectors {
   static const String transLogo = 'assets/svg/flip-vertical.svg';
   static const String contactLogo = 'assets/svg/contacts.svg';
   static const String arrowLeft = 'assets/svg/arrow-left.svg';
+  static const String sendLogo = 'assets/svg/send.svg';
+  static const String receiveLogo = 'assets/svg/receive.svg';
+  static const String transIcon = 'assets/svg/flip-horizontal.svg';
 }
