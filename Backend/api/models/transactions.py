@@ -9,11 +9,10 @@ class Transactions(models.Model):
     recipient_address=models.CharField(max_length=60)
     amount_sent=models.IntegerField()
     txn_fee=models.IntegerField()
-    transaction_id=models.CharField(max_length=255,blank=True, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     is_broadcasted=models.BooleanField(default=False)
    
     def __str__(self):
-        return self.transaction_id
+        return self.tx_id
 
 
