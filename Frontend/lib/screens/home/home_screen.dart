@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? AppColors.primaryColor
                   : AppColors.lightNeutral,
             ),
-            label: 'Sign Address',
+            label: 'Address',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
