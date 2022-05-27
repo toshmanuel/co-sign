@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import '../utils/utils.dart';
 
+void goBack(BuildContext context, {int count = 1}) {
+  for (var i = 1; i <= count; i++) {
+    Navigator.pop(context);
+  }
+}
+
 typedef voidFunction = void Function();
 
 class CustomButton extends StatelessWidget {

@@ -28,7 +28,7 @@ class _SetUpScreenState extends State<SetUpScreen> {
                     children: [
                       Center(
                         child: Text(
-                          howItWorkText,
+                          totalBalanceText,
                           style: AppTextStyle.textSize22.copyWith(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w600),
@@ -154,7 +154,7 @@ class _SetUpScreenState extends State<SetUpScreen> {
               ),
               CustomButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(GenerateAddress.id);
+                    Navigator.of(context).pushNamed(GenerateAddressTwo.id);
                   },
                   text: Text('Continue',
                       style: AppTextStyle.textSize21
