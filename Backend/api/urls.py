@@ -1,6 +1,6 @@
 from django.urls import path
 from .views.auth_view import LoginAPI, UserDetailAPI,RegisterUserAPIView
-from .views.transaction_view import CreateTransactionView
+from .views.transaction_view import BroadcastTransactionView, CreateTransactionView
 from knox import views as knox_views
 from .views.address_view import GenerateAddress, GetAddressInfo, GetAddressByUser
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
   path("api/v1/generateaddress",GenerateAddress.as_view()),
   path("api/v1/addressinfo/<address>",GetAddressInfo.as_view()),
   path("api/v1/addresslist/",GetAddressByUser.as_view()),
+  path("api/v1/transactions/<transaction_id>/broadcast/", BroadcastTransactionView.as_view())
 ]

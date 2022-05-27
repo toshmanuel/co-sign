@@ -5,12 +5,13 @@ from .address import Addresses
 class Transactions(models.Model):
     tx_id =models.CharField(max_length=80)
     address=models.ForeignKey(Addresses, on_delete=models.CASCADE)
-    txn_hex=models.CharField(max_length=200)
+    txn_hex=models.CharField(max_length=2000)
     recipient_address=models.CharField(max_length=60)
     amount_sent=models.IntegerField()
     txn_fee=models.IntegerField()
     transaction_id=models.CharField(max_length=255,blank=True, null=True)
     created_at=models.DateTimeField(auto_now_add=True)
+    is_broadcasted=models.BooleanField(default=False)
    
     def __str__(self):
         return self.transaction_id
