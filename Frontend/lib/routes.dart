@@ -17,7 +17,9 @@ final Map<String, WidgetBuilder> routes = {
   AddressInfo.id: (context) => const AddressInfo(),
   AddressList.id: (context) => const AddressList(),
   SplashScreen.id: (context) => const SplashScreen(),
-  SendScreen.id: (context) => const SendScreen(),
-  ReceiveScreen.id: (context) => const ReceiveScreen(),
+  SentTnxScreen.id: (context) => const SentTnxScreen(),
+  ReceiveTnxScreen.id: (context) => const ReceiveTnxScreen(),
   UnbroadcastScreen.id: (context) => const UnbroadcastScreen(),
+  ReceiveScreen.id: (context) => const ReceiveScreen(),
+  SendScreen.id: (context) => const SendScreen(),
 };

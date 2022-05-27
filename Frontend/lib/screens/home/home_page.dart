@@ -116,9 +116,11 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {},
                     ),
                     Height10(),
-                    Text('Transaction History',
-                        style: AppTextStyle.textSize13
-                            .copyWith(color: AppColors.primaryColor)),
+                    Text(
+                      'Transaction History',
+                      style: AppTextStyle.textSize13
+                          .copyWith(color: AppColors.primaryColor),
+                    ),
                   ],
                 ),
                 const Height30(),
@@ -142,7 +144,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, ReceiveScreen.id);
+                          },
                         ),
                         Height10(),
                         Text('Receive',
@@ -167,7 +171,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, SendScreen.id);
+                          },
                         ),
                         Height10(),
                         Text('Send',

@@ -30,7 +30,7 @@ class _TransactonScreenState extends State<TransactonScreen> {
             unselectedLabelColor: AppColors.lightNeutral,
             tabs: [
               Tab(icon: Icon(Icons.podcasts_sharp), text: 'Unbroadcast'),
-              Tab(icon: Icon(Icons.file_upload_outlined), text: 'Receive'),
+              Tab(icon: Icon(Icons.file_upload_outlined), text: 'Received'),
               Tab(icon: Icon(Icons.file_download_outlined), text: 'Sent'),
             ],
           ),
@@ -38,8 +38,8 @@ class _TransactonScreenState extends State<TransactonScreen> {
         body: const TabBarView(
           children: [
             UnbroadcastScreen(),
-            ReceiveScreen(),
-            SendScreen(),
+            ReceiveTnxScreen(),
+            SentTnxScreen(),
           ],
         ),
       ),

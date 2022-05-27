@@ -10,4 +10,6 @@ class AppVectors {
   static const String sendLogo = 'assets/svg/send.svg';
   static const String receiveLogo = 'assets/svg/receive.svg';
   static const String transIcon = 'assets/svg/flip-horizontal.svg';
+  static const String addIcon = 'assets/svg/plus.svg';
+  static const String minusIcon = 'assets/svg/minus.svg';
 }
