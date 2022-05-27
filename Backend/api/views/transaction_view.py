@@ -9,48 +9,52 @@ from buidl.hd import *
 from rest_framework.response import Response
 from rest_framework import status
 
+
 class CreateTransactionView(APIView):
-    
+
     permission_classes = (IsAuthenticated,)
-    
 
     def post(self, request):
-    
-        address = Addresses.objects.get(address_generated=request.data['address'])
+
+        address = Addresses.objects.get(
+            address_generated=request.data['address'])
         address_generated = address.address_generated
         print(address_generated)
-    
-        transaction_request = Session().get(url=f"https://blockstream.info/testnet/api/address/{address_generated}/utxo")
+
+        transaction_request = Session().get(
+            url=f"https://blockstream.info/testnet/api/address/{address_generated}/utxo")
         print(transaction_request.json())
         amount_to_send = request.data['amount']
         recipient = request.data['recipient']
         utxo = 0
         txn_inputs = []
 
-        
         for tran in transaction_request.json():
             if amount_to_send + 1000 >= utxo:
 
                 utxo = utxo + tran['value']
                 pub_list = list(address.redeem_script.split(' '))
-                
+
                 pub_list.pop(0)
                 while len(pub_list) > 3:
                     pub_list.pop(len(pub_list) - 1)
-                
-                redeem=RedeemScript.create_p2sh_multisig(quorum_m=2,pubkey_hexes=pub_list,expected_addr_network='testnet')
+
+                redeem = RedeemScript.create_p2sh_multisig(
+                    quorum_m=2, pubkey_hexes=pub_list, expected_addr_network='testnet')
                 print(redeem)
-                
-                inp=TxIn(bytes.fromhex(tran['txid']) , tran['vout'], script_sig=redeem)
+
+                inp = TxIn(bytes.fromhex(
+                    tran['txid']), tran['vout'], script_sig=redeem)
                 txn_inputs.append(inp)
 
         print(utxo)
         fee = (len(txn_inputs) + 2) * 146 + 2 * 34 + 20
         print(fee)
-        output1= TxOut.to_address(recipient, amount_to_send)
-        output2= TxOut.to_address(address.address_generated, utxo - (amount_to_send + fee))
+        output1 = TxOut.to_address(recipient, amount_to_send)
+        output2 = TxOut.to_address(
+            address.address_generated, utxo - (amount_to_send + fee))
 
-        txn=Tx(2, txn_inputs, [output1, output2], network='testnet')
+        txn = Tx(2, txn_inputs, [output1, output2], network='testnet')
 
         if len(request.data['private_keys']) == 2:
             p_k_WIF_1 = request.data['private_keys'][0]
@@ -62,35 +66,35 @@ class CreateTransactionView(APIView):
         try:
             print(p_k_WIF_1)
             print(p_k_WIF_2)
-            pkey1=PrivateKey.parse(p_k_WIF_1)
-            pkey2=PrivateKey.parse(p_k_WIF_2)
+            pkey1 = PrivateKey.parse(p_k_WIF_1)
+            pkey2 = PrivateKey.parse(p_k_WIF_2)
         except:
             return Response(
                 {
-                    "status":status.BAD_REQUEST,
+                    "status": status.BAD_REQUEST,
                     "error": "invalid private key, try validating the keys provided",
-                    }
+                }
             )
 
         for i in range(len(txn_inputs)):
-            sig1=txn.get_sig_legacy(i, pkey1, redeem_script=redeem)
-            sig2=txn.get_sig_legacy(i, pkey2, redeem_script=redeem)
-            txn_inputs[i].finalize_p2sh_multisig([sig1,sig2], redeem)
+            sig1 = txn.get_sig_legacy(i, pkey1, redeem_script=redeem)
+            sig2 = txn.get_sig_legacy(i, pkey2, redeem_script=redeem)
+            txn_inputs[i].finalize_p2sh_multisig([sig1, sig2], redeem)
 
         txn_hex = txn.serialize().hex()
-        
+
         transaction = Transactions.objects.create(
             amount_sent=amount_to_send,
-            recipient_address= recipient,
+            recipient_address=recipient,
             address=address,
-            txn_hex= txn_hex,
+            txn_hex=txn_hex,
             txn_fee=txn.fee(),
         )
 
         return Response(
             {
-                "status":status.HTTP_201_CREATED,
-                "transaction id":transaction.transaction_id,
+                "status": status.HTTP_201_CREATED,
+                "transaction id": transaction.transaction_id,
                 "fee": txn.fee(),
                 "amount": transaction.amount_sent,
                 "recipient": transaction.recipient_address,
@@ -98,7 +102,7 @@ class CreateTransactionView(APIView):
                 "broadcasted": False,
             }
         )
-    
+
 
 class BroadcastTransactionView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -106,8 +110,9 @@ class BroadcastTransactionView(APIView):
     def post(self, request, transaction_id):
         transaction = Transactions.objects.get(id=transaction_id)
         txn_hex = transaction.txn_hex
-        
-        tnx_pub_req = Session().post(url='https://blockstream.info/testnet/api/tx', data=txn_hex)
+
+        tnx_pub_req = Session().post(
+            url='https://blockstream.info/testnet/api/tx', data=txn_hex)
 
         txn_id = tnx_pub_req.text
         print(txn_id)
@@ -118,8 +123,37 @@ class BroadcastTransactionView(APIView):
 
         return Response(
             {
-                "status":status.HTTP_200_OK,
-                "transaction":txn_id,
-                "broadcasted": True,  
+                "status": status.HTTP_200_OK,
+                "transaction": txn_id,
+                "broadcasted": True,
             }
         )
+
+
+class GetUnBroadcastTransactionsView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        
+        user_id = request.user.id
+        addresses = Addresses.objects.filter(user_id=user_id).all()
+        unbroadcast_transactions = []
+        for address in addresses:
+            address_unbroadcast_transactions = Transactions.objects.filter(
+                address_id=address.id, is_broadcasted=False)
+            transactions = [
+                {
+                    "recipient": i.recipient_address,
+                    "amount": i.amount_sent,
+                    "fee": i.txn_fee,
+                    "date created": i.created_at,
+                    "broadcasted": i.is_broadcasted,
+                }
+                for i in address_unbroadcast_transactions
+            ]
+            unbroadcast_transactions.append(transactions)
+        
+        return Response({
+            "status": status.HTTP_200_OK,
+            "transactions" : unbroadcast_transactions
+        })

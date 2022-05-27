@@ -113,7 +113,9 @@ class GenerateNewAddress(APIView):
     def get(self,request):
         user_id = request.user.id
         user = User.objects.get(id=user_id)
-        addressinfo = Addresses.objects.get(user_id=user_id)
+        addresses = Addresses.objects.filter(user_id=user_id).all()
+        addressinfo = addresses[0]
+        
         pubkey1=addressinfo.key1
         pubkey2=addressinfo.key2
         service_key = generateservicekey()
