@@ -22,7 +22,7 @@ class _SendScreenState extends State<SendScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(right: 20, left: 20),
+        padding: const EdgeInsets.only(right: 30, left: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -66,7 +66,8 @@ class _SendScreenState extends State<SendScreen> {
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold),
                   ),
-                  Height35(),
+                  Height50(),
+                  Height50(),
                   TextFormField(
                     cursorColor: AppColors.primaryColor,
                     autofocus: false,

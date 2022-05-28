@@ -10,6 +10,7 @@ class AddressController extends GetxController {
   GenerateAddresses? generateAddresses;
   AddressInfo? addressInfo;
   AddressList? addressList;
+  GetNewAddress? getNewAddress;
 
   bool isLoading = false;
 
@@ -38,7 +39,7 @@ class AddressController extends GetxController {
     return Future.value(false);
   }
 
-  getAddressInfoQuery(int? address) async {
+  addressInfoQuery(int? address) async {
     getCurrentToken();
     isLoading = true;
     update();
@@ -52,7 +53,7 @@ class AddressController extends GetxController {
     return addressInfo;
   }
 
-  getAddressListQuery() async {
+  addressListQuery() async {
     getCurrentToken();
     isLoading = true;
     update();
@@ -64,5 +65,19 @@ class AddressController extends GetxController {
       addressList = AddressList.fromJson(response!.data);
     }
     return addressList;
+  }
+
+  getNewAddressQuery() async {
+    getCurrentToken();
+    isLoading = true;
+    update();
+    const endPoint = '$baseUrl/generatenewaddress/';
+    final response = await _coSignApi.get(endPoint, token: userToken);
+    if (response?.statusCode == 200) {
+      isLoading = false;
+      update();
+      getNewAddress = GetNewAddress.fromJson(response!.data);
+    }
+    return getNewAddress;
   }
 }
