@@ -1,20 +1,28 @@
 class AddressInfo {
   AddressInfo({
     required this.address,
-    required this.redeemscript,
+    required this.txid,
+    required this.value,
+    required this.vout,
   });
   late final String address;
-  late final String redeemscript;
+  late final String txid;
+  late final int value;
+  late final int vout;
 
   AddressInfo.fromJson(Map<String, dynamic> json) {
     address = json['address'];
-    redeemscript = json['redeemscript'];
+    txid = json['txid'];
+    value = json['value'];
+    vout = json['vout'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['address'] = address;
-    _data['redeemscript'] = redeemscript;
+    _data['txid'] = txid;
+    _data['value'] = value;
+    _data['vout'] = vout;
     return _data;
   }
 }
