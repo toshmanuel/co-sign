@@ -157,3 +157,24 @@ class GetAllTransactionsView(APIView):
             "status": status.HTTP_200_OK,
             "transactions" : transaction_list
         })
+
+class TransactionDetailsView(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, transaction_id):
+        transaction = Transactions.objects.get(id=transaction_id)
+
+        return Response({
+            "status" : status.HTTP_200_OK,
+            "transaction": {
+                "id": transaction.id,
+                "recipient": transaction.recipient_address,
+                "amount": transaction.amount_sent,
+                "fee": transaction.txn_fee,
+                "date created": transaction.created_at,
+                "broadcasted": transaction.is_broadcasted,
+            }
+        })
+        
+

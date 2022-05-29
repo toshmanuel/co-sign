@@ -42,6 +42,6 @@ def get_all_transactions(addresses, is_broadcasted=None):
             }
             for i in address_transactions
         ]
-        if transactions:
-            transaction_list.append(transactions)
+        transaction_list = transaction_list + transactions
+    
     return transaction_list
