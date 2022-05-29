@@ -10,6 +10,7 @@ class AddressController extends GetxController {
   GenerateAddresses? generateAddresses;
   AddressInfo? addressInfo;
   AddressList? addressList;
+  TotalUTXO? totalUTXO;
   GetNewAddress? getNewAddress;
 
   bool isLoading = false;
@@ -65,6 +66,20 @@ class AddressController extends GetxController {
       addressList = AddressList.fromJson(response!.data);
     }
     return addressList;
+  }
+
+  totalUTXOQuery() async {
+    getCurrentToken();
+    isLoading = true;
+    update();
+    const endPoint = '$baseUrl/totalutxo/';
+    final response = await _coSignApi.get(endPoint, token: userToken);
+    if (response?.status == 200) {
+      isLoading = false;
+      update();
+      totalUTXO = TotalUTXO.fromJson(response!.data);
+    }
+    return totalUTXO;
   }
 
   getNewAddressQuery() async {
