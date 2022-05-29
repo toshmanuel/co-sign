@@ -27,7 +27,7 @@ class AddressController extends GetxController {
     await getCurrentToken();
     isLoading = true;
     update();
-    const endPoint = '$baseUrl/generateaddress';
+    const endPoint = '$baseUrl/generateaddress/';
     final response = await _coSignApi.post(endPoint,
         body: generateAddressDetails, token: userToken);
     if (response?.statusCode == 200) {
@@ -74,7 +74,7 @@ class AddressController extends GetxController {
     update();
     const endPoint = '$baseUrl/totalutxo/';
     final response = await _coSignApi.get(endPoint, token: userToken);
-    if (response?.status == 200) {
+    if (response?.statusCode == 200) {
       isLoading = false;
       update();
       totalUTXO = TotalUTXO.fromJson(response!.data);
