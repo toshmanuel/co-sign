@@ -32,7 +32,6 @@ class _SendScreenState extends State<SendScreen> {
     ];
 
     return {
-      'address': addressController.text,
       'recipient': recipientController.text,
       'amount': amountController.text,
       'private_keys': privateKeys,
@@ -45,7 +44,7 @@ class _SendScreenState extends State<SendScreen> {
       body: GetBuilder<TransactionController>(
         builder: (_) => ModalProgressHUD(
           inAsyncCall: _transactionController.isLoading,
-           progressIndicator: const Loading(),
+          progressIndicator: const Loading(),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -94,21 +93,6 @@ class _SendScreenState extends State<SendScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         Height50(),
-                        TextFormField(
-                          cursorColor: AppColors.primaryColor,
-                          autofocus: false,
-                          controller: addressController,
-                          onSaved: (value) {
-                            addressController.text = value!;
-                          },
-                          decoration: AppDecorations.formStyle.copyWith(
-                            label: Text(
-                              'Address',
-                              style: AppTextStyle.textSize15
-                                  .copyWith(color: AppColors.primaryColor),
-                            ),
-                          ),
-                        ),
                         Height15(),
                         TextFormField(
                           cursorColor: AppColors.primaryColor,

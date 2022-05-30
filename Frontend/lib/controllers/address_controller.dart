@@ -69,11 +69,12 @@ class AddressController extends GetxController {
   }
 
   totalUTXOQuery() async {
-    getCurrentToken();
+    await getCurrentToken();
     isLoading = true;
     update();
     const endPoint = '$baseUrl/totalutxo/';
     final response = await _coSignApi.get(endPoint, token: userToken);
+    print(response);
     if (response?.statusCode == 200) {
       isLoading = false;
       update();

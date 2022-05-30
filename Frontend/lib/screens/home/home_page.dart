@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/controllers/address_controller.dart';
 import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +19,21 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController keyController = TextEditingController();
+
+  bool loading = true;
+
+  final _addressController = Get.put(AddressController());
+
+  void init() async {
+    await _addressController.totalUTXOQuery();
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +90,8 @@ class _HomePageState extends State<HomePage> {
                                 child: RichText(
                                   textAlign: TextAlign.center,
                                   text: TextSpan(
-                                    text: '300,000',
+                                    text: _addressController.totalUTXO?.utxo
+                                        .toString(),
                                     style: AppTextStyle.textSize22.copyWith(
                                         color: AppColors.primaryColor),
                                     children: [
@@ -115,7 +133,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () async {
+                          final s = await _addressController.totalUTXOQuery();
+                          print(s);
+                        },
                       ),
                       Height10(),
                       Text(

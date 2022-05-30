@@ -21,7 +21,7 @@ class CoSignApi {
           queryParameters: queryParameters,
           options: token == null
               ? null
-              : Options(headers: {'Authorization': 'Bearer $token'}));
+              : Options(headers: {'Authorization': 'Token $token'}));
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
