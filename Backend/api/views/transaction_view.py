@@ -9,6 +9,8 @@ from buidl.hd import *
 from rest_framework.response import Response
 from rest_framework import status
 
+from api.utils import get_all_transactions
+
 
 class CreateTransactionView(APIView):
 
@@ -137,23 +139,42 @@ class GetUnBroadcastTransactionsView(APIView):
         
         user_id = request.user.id
         addresses = Addresses.objects.filter(user_id=user_id).all()
-        unbroadcast_transactions = []
-        for address in addresses:
-            address_unbroadcast_transactions = Transactions.objects.filter(
-                address_id=address.id, is_broadcasted=False)
-            transactions = [
-                {
-                    "recipient": i.recipient_address,
-                    "amount": i.amount_sent,
-                    "fee": i.txn_fee,
-                    "date created": i.created_at,
-                    "broadcasted": i.is_broadcasted,
-                }
-                for i in address_unbroadcast_transactions
-            ]
-            unbroadcast_transactions.append(transactions)
+        unbroadcast_transactions = get_all_transactions(addresses, is_broadcasted=False)
         
         return Response({
             "status": status.HTTP_200_OK,
             "transactions" : unbroadcast_transactions
         })
+
+class GetAllTransactionsView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user_id = request.user.id
+        addresses = Addresses.objects.filter(user_id=user_id).all()
+        transaction_list = get_all_transactions(addresses)
+        return Response({
+            "status": status.HTTP_200_OK,
+            "transactions" : transaction_list
+        })
+
+class TransactionDetailsView(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, transaction_id):
+        transaction = Transactions.objects.get(id=transaction_id)
+
+        return Response({
+            "status" : status.HTTP_200_OK,
+            "transaction": {
+                "id": transaction.id,
+                "recipient": transaction.recipient_address,
+                "amount": transaction.amount_sent,
+                "fee": transaction.txn_fee,
+                "date created": transaction.created_at,
+                "broadcasted": transaction.is_broadcasted,
+            }
+        })
+        
+

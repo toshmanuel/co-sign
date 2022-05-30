@@ -35,7 +35,8 @@ class GenerateAddress(APIView):
         )
         address.save()
         return Response(
-            {"status": status.HTTP_201_CREATED, "address": address.address_generated}
+            {"status": status.HTTP_201_CREATED,
+                "address": address.address_generated}
         )
 
 
@@ -90,34 +91,40 @@ class GetAddressInfo(APIView):
 
         return Response(addressinfo)
 
+
 class GetAllUTXOByAddress(APIView):
-    permission_classes=(IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request):
-        addresses_utxo=[]
+        addresses_utxo = []
         user_id = request.user.id
         addressinfo = Addresses.objects.filter(user_id=user_id)
         addresses = [i.address_generated for i in addressinfo]
         for address in set(addresses):
-            transaction_request = Session().get(url=f"https://blockstream.info/testnet/api/address/{address}/utxo")
+            transaction_request = Session().get(
+                url=f"https://blockstream.info/testnet/api/address/{address}/utxo")
             body = transaction_request.json()
-            addr_amount=[i["value"]for i in body]
+            addr_amount = [i["value"]for i in body]
             addresses_utxo.append(sum(addr_amount))
-        allutxo=sum(addresses_utxo)
+        allutxo = sum(addresses_utxo)
 
-        return Response(allutxo)
+        return Response(
+            {"status": status.HTTP_201_CREATED, "utxo": allutxo}
+        )
+
 
 class GenerateNewAddress(APIView):
     """This view generates new address for users to avoid address reuse"""
-    permission_classes=(IsAuthenticated, )
-    def get(self,request):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
         user_id = request.user.id
         user = User.objects.get(id=user_id)
         addresses = Addresses.objects.filter(user_id=user_id).all()
         addressinfo = addresses[0]
-        
-        pubkey1=addressinfo.key1
-        pubkey2=addressinfo.key2
+
+        pubkey1 = addressinfo.key1
+        pubkey2 = addressinfo.key2
         service_key = generateservicekey()
         redeem = generateredeemscript(pubkey1, pubkey2, service_key)
         addr = redeem.address(network="testnet")
@@ -131,5 +138,6 @@ class GenerateNewAddress(APIView):
         )
         address.save()
         return Response(
-            {"status": status.HTTP_201_CREATED, "address": address.address_generated}
+            {"status": status.HTTP_201_CREATED,
+                "address": address.address_generated}
         )
