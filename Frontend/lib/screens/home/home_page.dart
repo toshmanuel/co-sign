@@ -38,177 +38,177 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 20, right: 30, left: 30, bottom: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        helloThereText,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyle.textSize22.copyWith(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SvgPicture.asset(
-                        AppVectors.logo,
-                        width: 40,
-                        height: 40,
-                      ),
-                    ],
-                  ),
-                  Height50(),
-                  Column(
-                    children: [
-                      Container(
-                        height: 150,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          color: AppColors.skyBlueColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
+        child: GetBuilder<AddressController>(
+          builder: (_) => Padding(
+            padding:
+                const EdgeInsets.only(top: 20, right: 30, left: 30, bottom: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          helloThereText,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyle.textSize22.copyWith(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SvgPicture.asset(
+                          AppVectors.logo,
+                          width: 40,
+                          height: 40,
+                        ),
+                      ],
+                    ),
+                    Height50(),
+                    Column(
+                      children: [
+                        Container(
+                          height: 150,
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: AppColors.skyBlueColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  totalBalanceText,
+                                  style: AppTextStyle.textSize22.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Center(
+                                  child: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      text: _addressController.totalUTXO?.utxo
+                                          .toString(),
+                                      style: AppTextStyle.textSize22.copyWith(
+                                          color: AppColors.primaryColor),
+                                      children: [
+                                        TextSpan(
+                                          text: ' satoshis',
+                                          style: AppTextStyle.textSize15
+                                              .copyWith(
+                                                  color: AppColors.lightNeutral,
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                totalBalanceText,
-                                style: AppTextStyle.textSize22.copyWith(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.w600),
+                      ],
+                    ),
+                    Height40(),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Column(
+                      children: [
+                        InkWell(
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            decoration: const BoxDecoration(
+                              color: AppColors.skyBlueColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                AppVectors.transIcon,
+                                color: AppColors.primaryColor,
                               ),
-                              Center(
-                                child: RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(
-                                    text: _addressController.totalUTXO?.utxo
-                                        .toString(),
-                                    style: AppTextStyle.textSize22.copyWith(
-                                        color: AppColors.primaryColor),
-                                    children: [
-                                      TextSpan(
-                                        text: ' satoshis',
-                                        style: AppTextStyle.textSize15.copyWith(
-                                            color: AppColors.lightNeutral,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                            ),
+                          ),
+                          onTap: ()  {},
+                        ),
+                        Height10(),
+                        Text(
+                          'Transaction History',
+                          style: AppTextStyle.textSize13
+                              .copyWith(color: AppColors.primaryColor),
+                        ),
+                      ],
+                    ),
+                    const Height30(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            InkWell(
+                              child: Container(
+                                height: 60,
+                                width: 60,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.skyBlueColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AppVectors.receiveLogo,
+                                    color: AppColors.primaryColor,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Height40(),
-                ],
-              ),
-              Column(
-                children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        child: Container(
-                          height: 60,
-                          width: 60,
-                          decoration: const BoxDecoration(
-                            color: AppColors.skyBlueColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              AppVectors.transIcon,
-                              color: AppColors.primaryColor,
+                              onTap: () {
+                                Navigator.pushNamed(context, ReceiveScreen.id);
+                              },
                             ),
-                          ),
+                            Height10(),
+                            Text('Receive',
+                                style: AppTextStyle.textSize13
+                                    .copyWith(color: AppColors.primaryColor)),
+                          ],
                         ),
-                        onTap: () async {
-                          final s = await _addressController.totalUTXOQuery();
-                          print(s);
-                        },
-                      ),
-                      Height10(),
-                      Text(
-                        'Transaction History',
-                        style: AppTextStyle.textSize13
-                            .copyWith(color: AppColors.primaryColor),
-                      ),
-                    ],
-                  ),
-                  const Height30(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          InkWell(
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              decoration: const BoxDecoration(
-                                color: AppColors.skyBlueColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  AppVectors.receiveLogo,
-                                  color: AppColors.primaryColor,
+                        Column(
+                          children: [
+                            InkWell(
+                              child: Container(
+                                height: 60,
+                                width: 60,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.skyBlueColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AppVectors.sendLogo,
+                                    color: AppColors.primaryColor,
+                                  ),
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.pushNamed(context, SendScreen.id);
+                              },
                             ),
-                            onTap: () {
-                              Navigator.pushNamed(context, ReceiveScreen.id);
-                            },
-                          ),
-                          Height10(),
-                          Text('Receive',
-                              style: AppTextStyle.textSize13
-                                  .copyWith(color: AppColors.primaryColor)),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          InkWell(
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              decoration: const BoxDecoration(
-                                color: AppColors.skyBlueColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  AppVectors.sendLogo,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.pushNamed(context, SendScreen.id);
-                            },
-                          ),
-                          Height10(),
-                          Text('Send',
-                              style: AppTextStyle.textSize13
-                                  .copyWith(color: AppColors.primaryColor)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                            Height10(),
+                            Text('Send',
+                                style: AppTextStyle.textSize13
+                                    .copyWith(color: AppColors.primaryColor)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
