@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:frontend/utils/utils.dart';
-import 'package:frontend/widgets/widgets.dart';
+import 'package:frontend/controllers/controllers.dart';
+import 'package:get/get.dart';
 
 class AddressList extends StatefulWidget {
   const AddressList({Key? key}) : super(key: key);
@@ -12,23 +11,35 @@ class AddressList extends StatefulWidget {
 }
 
 class _AddressListState extends State<AddressList> {
-  final titles = ["List 1", "List 2", "List 3"];
-  final subtitles = [
-    "Here is list 1 subtitle",
-    "Here is list 2 subtitle",
-    "Here is list 3 subtitle"
-  ];
+  bool loading = true;
+
+  final _addressController = Get.put(AddressController());
+  void init() async {
+    await _addressController.addressListQuery();
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          ListTile(title: Text('List 1')),
-          ListTile(title: Text('List 2')),
-          ListTile(title: Text('List 3')),
-        ],
+        body: GetBuilder<AddressController>(
+      builder: (_) => ListView.builder(
+        itemCount: _addressController.addressList?.addresses.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              _addressController.addressList?.addresses[index] ?? '',
+            ),
+          );
+        },
       ),
-    );
+    ));
   }
 }
