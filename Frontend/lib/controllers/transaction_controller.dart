@@ -22,22 +22,24 @@ class TransactionController extends GetxController {
     final SharedPreferences localStorage =
         await SharedPreferences.getInstance();
     userToken = localStorage.getString(tokenResponse);
+    print(userToken);
   }
 
   createTransactionQuery(Map<String, dynamic> createTransactionDetails) async {
     await getCurrentToken();
-    isLoading = true;
+
     update();
     const endPoint = '$baseUrl/transactions/';
     final response = await _coSignApi.post(endPoint,
         body: createTransactionDetails, token: userToken);
+    print(response?.statusCode);
     if (response?.statusCode == 200) {
       createTransaction = CreateTransaction.fromJson(response!.data);
-      isLoading = false;
+
       update();
-      return Future.value(false);
+      return Future.value(true);
     }
-    isLoading = true;
+
     return Future.value(false);
   }
 

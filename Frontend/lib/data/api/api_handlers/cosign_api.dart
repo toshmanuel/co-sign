@@ -38,15 +38,15 @@ class CoSignApi {
     try {
       final response = await dio.post(string,
           data: body,
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+          options: Options(headers: {'Authorization': 'Token $token'}));
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
-      // if (e.response!.data!['message'] == String) {
-      //   showToastAnyWhere(e.response!.data!['message']);
-      // } else if (e.response!.data!['message'] != String) {
-      //   showToastAnyWhere(e.response!.data!['message']);
-      // }
+      if (e.response!.data!['message'] == String) {
+        showToastAnyWhere(e.response!.data!['message']);
+      } else if (e.response!.data!['message'] != String) {
+        showToastAnyWhere(e.response!.data!['message']);
+      }
     } on SocketException {}
   }
 

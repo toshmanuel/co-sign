@@ -13,19 +13,28 @@ class AuthenticationController extends GetxController {
 
   final _authServices = AuthServices();
 
-  Future<bool> siginUpQuery(Map<String, dynamic> signUpDetails) async {
+  Future<bool> signUpQuery(Map<String, dynamic> signUpDetails) async {
     isLoading = true;
     update();
-    const endPoint = '$baseUrl/register/';
-    final response = await _coSignApi.post(endPoint, body: signUpDetails);
-    if (response?.statusCode == 201) {
-      userRegister = UserRegister.fromJson(response!.data);
+    try {
+      const endPoint = '$baseUrl/register/';
+      print(endPoint);
+
+      final response = await _coSignApi.post(endPoint, body: signUpDetails);
+      print(response);
+      if (response?.statusCode == 201) {
+        userRegister = UserRegister.fromJson(response!.data);
+        isLoading = false;
+        update();
+        return Future.value(true);
+      }
+      isLoading = true;
+      return Future.value(false);
+    } catch (e) {
       isLoading = false;
       update();
-      return Future.value(true);
+      return Future.value(false);
     }
-    isLoading = true;
-    return Future.value(false);
   }
 
   Future<bool> signInQuery(Map<String, dynamic> signInDetails) async {
@@ -36,7 +45,8 @@ class AuthenticationController extends GetxController {
       final response = await _coSignApi.post(endPoint, body: signInDetails);
       if (response?.statusCode == 200) {
         userLogin = UserLogin.fromJson(response!.data);
-       await AuthServices.getInstance.saveUserDetails(userLogin, isLogin: true);
+        await AuthServices.getInstance
+            .saveUserDetails(userLogin, isLogin: true);
         isLoading = false;
         update();
         return Future.value(true);

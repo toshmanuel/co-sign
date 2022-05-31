@@ -14,8 +14,10 @@ class _AddressListState extends State<AddressList> {
   bool loading = true;
 
   final _addressController = Get.put(AddressController());
-  void init() async {
-    await _addressController.addressListQuery();
+  void init() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      _addressController.addressListQuery();
+    });
   }
 
   @override
@@ -29,17 +31,18 @@ class _AddressListState extends State<AddressList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GetBuilder<AddressController>(
-      builder: (_) => ListView.builder(
-        itemCount: _addressController.addressList?.addresses.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              _addressController.addressList?.addresses[index] ?? '',
-            ),
-          );
-        },
+      body: GetBuilder<AddressController>(
+        builder: (_) => ListView.builder(
+          itemCount: _addressController.addressList?.addresses.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(
+                _addressController.addressList?.addresses[index] ?? '',
+              ),
+            );
+          },
+        ),
       ),
-    ));
+    );
   }
 }
