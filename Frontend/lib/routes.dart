@@ -17,6 +17,6 @@ final Map<String, WidgetBuilder> routes = {
   SentTnxScreen.id: (context) => const SentTnxScreen(),
   ReceiveTnxScreen.id: (context) => const ReceiveTnxScreen(),
   UnbroadcastScreen.id: (context) => const UnbroadcastScreen(),
-  ReceiveScreen.id: (context) => const ReceiveScreen(),
+  ReceiveScreen.id: (context) => const ReceiveScreen(address: ''),
   SendScreen.id: (context) => const SendScreen(),
 };

@@ -23,21 +23,23 @@ class AddressController extends GetxController {
     userToken = localStorage.getString(tokenResponse);
   }
 
-  generateAddressQuery(Map<String, dynamic> generateAddressDetails) async {
+  Future<String> generateAddressQuery(
+      Map<String, dynamic> generateAddressDetails) async {
     await getCurrentToken();
-    isLoading = true;
-    update();
+
     const endPoint = '$baseUrl/generateaddress/';
     final response = await _coSignApi.post(endPoint,
         body: generateAddressDetails, token: userToken);
+
     if (response?.statusCode == 200) {
-      generateAddresses = GenerateAddresses.fromJson(response!.data);
+      final generateAddresses = GenerateAddresses.fromJson(response!.data);
+      final address = generateAddresses.address;
       isLoading = false;
-      update();
-      return Future.value(true);
+
+      return Future.value(address);
     }
-    isLoading = true;
-    return Future.value(false);
+
+    return Future.value('');
   }
 
   addressInfoQuery(int? address) async {

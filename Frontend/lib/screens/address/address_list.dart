@@ -26,7 +26,9 @@ class _AddressListState extends State<AddressList> {
     super.initState();
   }
 
-  int index = 0;
+  int index = -2;
+
+  final numbers = -1;
 
   @override
   Widget build(BuildContext context) {
