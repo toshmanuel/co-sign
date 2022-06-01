@@ -35,17 +35,20 @@ class CoSignApi {
     required Map<String, dynamic> body,
     String? token,
   }) async {
+    Map<String, dynamic>? headers =
+        token != null ? {'Authorization': 'Token $token'} : null;
+
     try {
       final response = await dio.post(string,
-          data: body,
-          options: Options(headers: {'Authorization': 'Token $token'}));
+          data: body, options: Options(headers: headers));
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
+      print(e);
       if (e.response!.data!['message'] == String) {
         showToastAnyWhere(e.response!.data!['message']);
       } else if (e.response!.data!['message'] != String) {
-        showToastAnyWhere(e.response!.data!['message']);
+        // showToastAnyWhere(e.response!.data!['message']);
       }
     } on SocketException {}
   }

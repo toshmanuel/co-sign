@@ -18,7 +18,6 @@ class AuthenticationController extends GetxController {
     update();
     try {
       const endPoint = '$baseUrl/register/';
-      print(endPoint);
 
       final response = await _coSignApi.post(endPoint, body: signUpDetails);
       print(response);
@@ -28,34 +27,44 @@ class AuthenticationController extends GetxController {
         update();
         return Future.value(true);
       }
-      isLoading = true;
-      return Future.value(false);
+
+      isLoading = false;
+      return Future.value(true);
     } catch (e) {
+      print(e);
       isLoading = false;
       update();
       return Future.value(false);
     }
   }
 
+  void setLoading(bool status) => isLoading = status;
+
   Future<bool> signInQuery(Map<String, dynamic> signInDetails) async {
-    isLoading = true;
+    setLoading(true);
     update();
+
     try {
       const endPoint = '$baseUrl/login/';
       final response = await _coSignApi.post(endPoint, body: signInDetails);
+
       if (response?.statusCode == 200) {
         userLogin = UserLogin.fromJson(response!.data);
         await AuthServices.getInstance
             .saveUserDetails(userLogin, isLogin: true);
-        isLoading = false;
+
+        setLoading(false);
         update();
+
         return Future.value(true);
       }
-      isLoading = true;
+
+      setLoading(false);
       return Future.value(false);
     } catch (e) {
-      isLoading = false;
+      setLoading(false);
       update();
+
       return Future.value(false);
     }
   }

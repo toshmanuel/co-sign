@@ -194,9 +194,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                loading = true;
-                              });
+                              setState(() => loading = true);
+
                               final signUp = await _authenticationController
                                   .signUpQuery(SignUpVariable());
                               if (signUp) {
