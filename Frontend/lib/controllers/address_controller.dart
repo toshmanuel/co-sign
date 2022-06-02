@@ -56,17 +56,19 @@ class AddressController extends GetxController {
     return addressInfo;
   }
 
-  addressListQuery() async {
+  Future<AddressList?> addressListQuery() async {
     getCurrentToken();
     isLoading = true;
     update();
     const endPoint = '$baseUrl/addresslist/';
     final response = await _coSignApi.get(endPoint, token: userToken);
+
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
       addressList = AddressList.fromJson(response!.data);
     }
+
     return addressList;
   }
 
@@ -85,17 +87,22 @@ class AddressController extends GetxController {
     return totalUTXO;
   }
 
-  getNewAddressQuery() async {
+  Future<String?> getNewAddressQuery() async {
     getCurrentToken();
     isLoading = true;
     update();
+
     const endPoint = '$baseUrl/generatenewaddress/';
     final response = await _coSignApi.get(endPoint, token: userToken);
+
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
       getNewAddress = GetNewAddress.fromJson(response!.data);
+
+      return getNewAddress?.address;
     }
-    return getNewAddress;
+
+    return null;
   }
 }

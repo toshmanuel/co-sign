@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/controllers/address_controller.dart';
-import 'package:frontend/screens/home/home.dart';
+// import 'package:frontend/screens/home/home.dart';
+import 'package:frontend/screens/screens.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 import 'package:get/get.dart';
+
+import '../../data/models/address_list.dart' as ad;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,9 +25,11 @@ class _HomePageState extends State<HomePage> {
   bool loading = true;
 
   final _addressController = Get.put(AddressController());
+  ad.AddressList? addresses;
 
   void init() async {
     await _addressController.totalUTXOQuery();
+    addresses = await _addressController.addressListQuery();
   }
 
   generateAddressVariable() {
@@ -173,117 +178,127 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               onTap: () {
-                                //  Navigator.pushNamed(context, ReceiveScreen.id);
-
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0),
-                                      ),
-                                    ),
-                                    title: Column(
-                                      children: [
-                                        Height35(),
-                                        const Text(
-                                          'Generate Address',
-                                          textAlign: TextAlign.center,
-                                          style: AppTextStyle.textSize21,
-                                        ),
-                                        Height15(),
-                                        const Text(
-                                          'As a new user need to generate an address',
-                                          style: AppTextStyle.textSize14,
-                                        ),
-                                        Height25(),
-                                        Form(
-                                          key: _formKey,
-                                          child: Column(
+                                addresses?.addresses.isEmpty == true
+                                    ? showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0),
+                                            ),
+                                          ),
+                                          title: Column(
                                             children: [
-                                              TextFormField(
-                                                cursorColor:
-                                                    AppColors.primaryColor,
-                                                autofocus: false,
-                                                controller: key1Controller,
-                                                decoration: AppDecorations
-                                                    .formStyle
-                                                    .copyWith(
-                                                  label: Text(
-                                                    'Key 1',
-                                                    style: AppTextStyle
-                                                        .textSize15
-                                                        .copyWith(
-                                                            color: AppColors
-                                                                .primaryColor),
-                                                  ),
+                                              Height35(),
+                                              const Text(
+                                                'Generate Address',
+                                                textAlign: TextAlign.center,
+                                                style: AppTextStyle.textSize21,
+                                              ),
+                                              Height15(),
+                                              const Text(
+                                                'As a new user need to generate an address',
+                                                style: AppTextStyle.textSize14,
+                                              ),
+                                              Height25(),
+                                              Form(
+                                                key: _formKey,
+                                                child: Column(
+                                                  children: [
+                                                    TextFormField(
+                                                      cursorColor: AppColors
+                                                          .primaryColor,
+                                                      autofocus: false,
+                                                      controller:
+                                                          key1Controller,
+                                                      decoration: AppDecorations
+                                                          .formStyle
+                                                          .copyWith(
+                                                        label: Text(
+                                                          'Key 1',
+                                                          style: AppTextStyle
+                                                              .textSize15
+                                                              .copyWith(
+                                                                  color: AppColors
+                                                                      .primaryColor),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Height10(),
+                                                    TextFormField(
+                                                      cursorColor: AppColors
+                                                          .primaryColor,
+                                                      autofocus: false,
+                                                      controller:
+                                                          key2Controller,
+                                                      decoration: AppDecorations
+                                                          .formStyle
+                                                          .copyWith(
+                                                        label: Text(
+                                                          'Key 2',
+                                                          style: AppTextStyle
+                                                              .textSize15
+                                                              .copyWith(
+                                                                  color: AppColors
+                                                                      .primaryColor),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              Height10(),
-                                              TextFormField(
-                                                cursorColor:
-                                                    AppColors.primaryColor,
-                                                autofocus: false,
-                                                controller: key2Controller,
-                                                decoration: AppDecorations
-                                                    .formStyle
-                                                    .copyWith(
-                                                  label: Text(
-                                                    'Key 2',
-                                                    style: AppTextStyle
-                                                        .textSize15
-                                                        .copyWith(
-                                                            color: AppColors
-                                                                .primaryColor),
-                                                  ),
-                                                ),
-                                              ),
+                                              Height50(),
                                             ],
                                           ),
-                                        ),
-                                        Height50(),
-                                      ],
-                                    ),
-                                    content: Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: Container(
-                                        height: 50,
-                                        width: double.infinity,
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(25),
-                                            ),
-                                            color: AppColors.primaryColor),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            await _addressController
-                                                .generateAddressQuery(
-                                                    generateAddressVariable())
-                                                .then((address) {
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => ReceiveScreen(
-                                                      address: address),
+                                          content: Padding(
+                                            padding: const EdgeInsets.all(0.0),
+                                            child: Container(
+                                              height: 50,
+                                              width: double.infinity,
+                                              decoration: const BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(25),
+                                                  ),
+                                                  color:
+                                                      AppColors.primaryColor),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  await _addressController
+                                                      .generateAddressQuery(
+                                                          generateAddressVariable())
+                                                      .then((address) {
+                                                    _addressController
+                                                        .addressListQuery();
+                                                    Navigator.pushReplacement(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                ReceiveScreen(
+                                                                    address:
+                                                                        address,
+                                                                    generateAddress:
+                                                                        false)));
+                                                  });
+                                                },
+                                                child: Center(
+                                                  child: Text(
+                                                    'Generate Address',
+                                                    style: AppTextStyle
+                                                        .textSize15
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .whiteColor),
+                                                  ),
                                                 ),
-                                              );
-                                            });
-                                          },
-                                          child: Center(
-                                            child: Text(
-                                              'Generate Address',
-                                              style: AppTextStyle.textSize15
-                                                  .copyWith(
-                                                      color:
-                                                          AppColors.whiteColor),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                      )
+                                    : Navigator.pushNamed(
+                                        context, ReceiveScreen.id);
                               },
                             ),
                             Height10(),

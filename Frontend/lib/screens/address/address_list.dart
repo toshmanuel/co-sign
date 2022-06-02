@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/controllers/controllers.dart';
+import 'package:frontend/utils/colors.dart';
+import 'package:frontend/utils/utils.dart';
 import 'package:get/get.dart';
 
 class AddressList extends StatefulWidget {
@@ -35,11 +38,39 @@ class _AddressListState extends State<AddressList> {
     return Scaffold(
       body: GetBuilder<AddressController>(
         builder: (_) => ListView.builder(
+          padding: const EdgeInsets.all(8),
           itemCount: _addressController.addressList?.addresses.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                _addressController.addressList?.addresses[index] ?? '',
+            return Card(
+              color: Colors.white,
+              borderOnForeground: true,
+              elevation: 5,
+              child: ListTile(
+                title: TextButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(
+                      ClipboardData(
+                        text: _addressController.addressList?.addresses[index],
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Copied address to clipboard"),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.copy_rounded,
+                    size: 20.0,
+                    color: AppColors.primaryColor,
+                  ),
+                  label: Text(
+                    _addressController.addressList?.addresses[index] ?? '',
+                    style: AppTextStyle.textSize12.copyWith(
+                        color: AppColors.lightNeutral,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             );
           },
