@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/routes.dart';
-import 'package:frontend/screens/auth/auth.dart';
-import 'package:frontend/screens/auth/onboarding.dart';
+import 'package:frontend/screens/screens.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:get/get.dart';
 
@@ -32,8 +31,8 @@ class CoSign extends StatelessWidget {
                   TargetPlatform.iOS: ZoomPageTransitionsBuilder()
                 },
               )),
-              home: const OnboardingScreen(),
-              initialRoute: OnboardingScreen.id,
+              home: const SplashScreen(),
+              initialRoute: SplashScreen.id,
               routes: routes,
             );
           },

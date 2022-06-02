@@ -16,7 +16,7 @@ class AuthenticationController extends GetxController {
   Future<bool> siginUpQuery(Map<String, dynamic> signUpDetails) async {
     isLoading = true;
     update();
-    const endPoint = '$baseUrl/register';
+    const endPoint = '$baseUrl/register/';
     final response = await _coSignApi.post(endPoint, body: signUpDetails);
     if (response?.statusCode == 201) {
       userRegister = UserRegister.fromJson(response!.data);
