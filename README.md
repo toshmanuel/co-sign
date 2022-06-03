@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> A service that provide collaborative and secure custody of bitcoin. A M of N multi-sig wallet where the user holds Mof the keys and the service holds one, that way the service is unable to sign transactions since they only have one key. Users can make use of their M keys or allow service to provide the other key necessary for transaction (User has to give service permission to sign with their key)
+> A service that provides collaborative and secure custody of bitcoin. A M of N multi-sig wallet where the user holds M of the keys and the service holds one, that way the service is unable to sign transactions since they only have one key. Users can make use of their M keys or allow service to provide the other key necessary for transaction (User has to give service permission to sign with their key)
 
 ## Backend
 
