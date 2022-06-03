@@ -164,15 +164,8 @@ class _SendScreenState extends State<SendScreen> {
                   ),
                   CustomButton(
                     onPressed: () async {
-                      // print('hello');
-                      // if (_formKey.currentState!.validate()) {
-                      // setState(() {
-                      //   loading = true;
-                      // });
-                      final s = await _transactionController
+                      await _transactionController
                           .createTransactionQuery(createTransVariable());
-                      print(s);
-                      // }
                     },
                     text: Text('Create Transaction',
                         style: AppTextStyle.textSize21

@@ -97,11 +97,11 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
                     CustomButton(
                       onPressed: () {
                         Clipboard.setData(
-                          const ClipboardData(text: ''),
+                          ClipboardData(text: address),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Text copied to clipboard"),
+                            content: Text("Copied Address to clipboard"),
                           ),
                         );
                       },

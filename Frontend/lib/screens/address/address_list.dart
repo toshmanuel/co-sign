@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/controllers/controllers.dart';
-import 'package:frontend/utils/colors.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:get/get.dart';
 
@@ -29,9 +28,6 @@ class _AddressListState extends State<AddressList> {
     super.initState();
   }
 
-  int index = -2;
-
-  final numbers = -1;
 
   @override
   Widget build(BuildContext context) {

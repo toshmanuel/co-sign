@@ -48,7 +48,7 @@ class CoSignApi {
       if (e.response!.data!['message'] == String) {
         showToastAnyWhere(e.response!.data!['message']);
       } else if (e.response!.data!['message'] != String) {
-        // showToastAnyWhere(e.response!.data!['message']);
+        showToastAnyWhere(e.response!.data!['message']);
       }
     } on SocketException {}
   }
