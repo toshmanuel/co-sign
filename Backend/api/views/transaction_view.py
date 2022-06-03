@@ -96,7 +96,6 @@ class CreateTransactionView(APIView):
         return Response(
             {
                 "status": status.HTTP_201_CREATED,
-                "transaction id": transaction.transaction_id,
                 "fee": txn.fee(),
                 "amount": transaction.amount_sent,
                 "recipient": transaction.recipient_address,
