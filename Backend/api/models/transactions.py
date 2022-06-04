@@ -3,10 +3,10 @@ from .address import Addresses
 
 # Create your models here.
 class Transactions(models.Model):
-    tx_id =models.CharField(max_length=80, default="hello")
+    tx_id =models.CharField(max_length=80, default=None)
     address=models.ForeignKey(Addresses, on_delete=models.CASCADE)
     txn_hex=models.CharField(max_length=2000)
-    recipient_address=models.CharField(max_length=60, default='hello')
+    recipient_address=models.CharField(max_length=60, default=None)
     amount_sent=models.IntegerField(null=True)
     txn_fee=models.IntegerField(null=True)
     created_at=models.DateTimeField(auto_now_add=True)
