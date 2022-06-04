@@ -47,7 +47,7 @@ class CreateTransactionView(APIView):
                         tran['txid']), tran['vout'], script_sig=redeem)
                     txn_inputs.append(inp)
             
-            if amount_to_send + 1000 >= utxo:
+            if amount_to_send + 1000 <= utxo:
                 break
 
         
@@ -144,6 +144,20 @@ class GetUnBroadcastTransactionsView(APIView):
         return Response({
             "status": status.HTTP_200_OK,
             "transactions" : unbroadcast_transactions
+        })
+
+class GetBroadcastedTransactionsView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        
+        user_id = request.user.id
+        addresses = Addresses.objects.filter(user_id=user_id).all()
+        broadcasted_transactions = get_all_transactions(addresses, is_broadcasted=True)
+        
+        return Response({
+            "status": status.HTTP_200_OK,
+            "transactions" : broadcasted_transactions
         })
 
 class GetAllTransactionsView(APIView):
