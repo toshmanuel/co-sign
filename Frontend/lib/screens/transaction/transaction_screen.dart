@@ -14,7 +14,7 @@ class _TransactonScreenState extends State<TransactonScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -30,15 +30,15 @@ class _TransactonScreenState extends State<TransactonScreen> {
             unselectedLabelColor: AppColors.lightNeutral,
             tabs: [
               Tab(icon: Icon(Icons.podcasts_sharp), text: 'Unbroadcast'),
-              Tab(icon: Icon(Icons.file_upload_outlined), text: 'Received'),
-              Tab(icon: Icon(Icons.file_download_outlined), text: 'Sent'),
+              //  Tab(icon: Icon(Icons.file_upload_outlined), text: 'Received'),
+              Tab(icon: Icon(Icons.swap_vert), text: 'All Txn'),
             ],
           ),
         ),
         body: const TabBarView(
           children: [
             UnbroadcastScreen(),
-            ReceiveTnxScreen(),
+            //  ReceiveTnxScreen(),
             SentTnxScreen(),
           ],
         ),

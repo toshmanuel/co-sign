@@ -25,14 +25,14 @@ class CoSignApi {
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
-      if (e.response!.data!['message'] == String) {
+      if (e.response?.data['message'] == String) {
       } else if (e.response!.data!['message'] != String) {}
     }
   }
 
   Future<dynamic> post(
     String string, {
-    required Map<String, dynamic> body,
+    Map<String, dynamic>? body,
     String? token,
   }) async {
     Map<String, dynamic>? headers =
@@ -45,11 +45,11 @@ class CoSignApi {
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
       print(e);
-      if (e.response!.data!['message'] == String) {
-        showToastAnyWhere(e.response!.data!['message']);
-      } else if (e.response!.data!['message'] != String) {
-        showToastAnyWhere(e.response!.data!['message']);
-      }
+      // if (e.response?.data['message'] == String) {
+      //   showToastAnyWhere(e.response!.data!['message']);
+      // } else if (e.response!.data!['message'] != String) {
+      //   showToastAnyWhere(e.response!.data!['message']);
+      // }
     } on SocketException {}
   }
 

@@ -20,7 +20,6 @@ class AuthenticationController extends GetxController {
       const endPoint = '$baseUrl/register/';
 
       final response = await _coSignApi.post(endPoint, body: signUpDetails);
-      print(response);
       if (response?.statusCode == 201) {
         userRegister = UserRegister.fromJson(response!.data);
         isLoading = false;

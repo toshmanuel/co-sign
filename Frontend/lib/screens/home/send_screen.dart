@@ -32,7 +32,7 @@ class _SendScreenState extends State<SendScreen> {
 
     return {
       'recipient': recipientController.text,
-      'amount': amountController.text,
+      'amount': int.parse(amountController.text),
       'private_keys': privateKeys,
     };
   }

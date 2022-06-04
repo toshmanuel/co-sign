@@ -41,7 +41,7 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
                     child: ListView.builder(
                       itemCount: _transactionController
                           .unbroadcastedTransactions?.transactions?.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, int index) {
                         final transaction = _transactionController
                             .unbroadcastedTransactions?.transactions![index];
                         return Card(
@@ -148,6 +148,29 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
                                     ],
                                   ),
                                 ),
+                                Height10(),
+                                Center(
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                        side: const BorderSide(
+                                            width: 1.5,
+                                            color: AppColors.primaryColor)),
+                                    onPressed: () {
+                                      int? id = _transactionController
+                                          .unbroadcastedTransactions!
+                                          .transactions![index]
+                                          .id;
+
+                                      _transactionController
+                                          .broadcastTransactionQuery(id);
+                                    },
+                                    child: const Text(
+                                      'Broadcard Transaction',
+                                      style: TextStyle(
+                                          color: AppColors.primaryColor),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),

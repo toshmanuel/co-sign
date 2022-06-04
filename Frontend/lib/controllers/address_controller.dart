@@ -78,7 +78,6 @@ class AddressController extends GetxController {
     update();
     const endPoint = '$baseUrl/totalutxo/';
     final response = await _coSignApi.get(endPoint, token: userToken);
-    print(response);
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
