@@ -1,6 +1,7 @@
 from buidl.hd import *
 from buidl.script import RedeemScript
 from buidl.helper import *
+from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 from api.models.transactions import Transactions
 
@@ -45,3 +46,18 @@ def get_all_transactions(addresses, is_broadcasted=None):
         transaction_list = transaction_list + transactions
     
     return transaction_list
+
+def CheckNodeConnection(network, rpc_user, rpc_pwd):
+    if network == "testnet":
+        rpc_connection = AuthServiceProxy(
+            "http://%s:%s@localhost:18332" % (rpc_user, rpc_pwd)
+        )
+    elif network == "signet":
+        rpc_connection = AuthServiceProxy(
+            "http://%s:%s@localhost:38332" % (rpc_user, rpc_pwd)
+        )
+    elif network == "regtest":
+        rpc_connection = AuthServiceProxy(
+            "http://%s:%s@localhost:18443" % (rpc_user, rpc_pwd)
+        )
+    return rpc_connection

@@ -7,6 +7,6 @@ class Addresses(models.Model):
     user_id= models.ForeignKey(User, on_delete=models.CASCADE)
     redeem_script=models.CharField(max_length=400)
     service_key = models.CharField(max_length=80)  
-    key1=models.CharField(max_length=100) 
-    key2=models.CharField(max_length=100) 
+    key1=models.CharField(max_length=100, default=None) 
+    key2=models.CharField(max_length=100, default=None) 
    

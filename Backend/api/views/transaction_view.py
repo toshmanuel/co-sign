@@ -6,10 +6,11 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from buidl.tx import Tx, TxOut, TxIn, RedeemScript
 from buidl.hd import *
+from buidl.psbt import *
 from rest_framework.response import Response
 from rest_framework import status
 
-from api.utils import get_all_transactions
+from api.utils import get_all_transactions, CheckNodeConnection
 
 
 class CreateTransactionView(APIView):
@@ -176,5 +177,81 @@ class TransactionDetailsView(APIView):
                 "broadcasted": transaction.is_broadcasted,
             }
         })
+
+class CreatePSBT(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        recipient = request.data['recipient']
+        amount = request.data['amount']
+        user_id = request.user.id
+        addresses = Addresses.objects.filter(user_id=user_id)
+        addresses = [i.address_generated for i in addresses]
+        for address in set(addresses):
+            transaction_request = Session().get(
+                url=f"https://blockstream.info/testnet/api/address/{address}/utxo")
+            body = transaction_request.json()
+        
+        address = Addresses.objects.get(
+          address_generated=request.data['address'])
+        address_generated = address.address_generated
+        pub_list = list(address.redeem_script.split(' '))
+        pub_list.pop(0)
+        while len(pub_list) > 3:
+            pub_list.pop(len(pub_list) - 1)
+        rpc=CheckNodeConnection("testnet","bitcoin","bitcoin")
+        rpc.addmultisigaddress(2,pub_list)
+        rpc.importaddress(address_generated,'testing',False)
+
+    
+        transaction_request = Session().get(
+            url=f"https://blockstream.info/testnet/api/address/{address_generated}/utxo")
+        body=transaction_request.json()
+        tx_id=[{'txid':i['txid'],'value':i['value'],'vout':i['vout']}for i in body]
+        input=[]
+        utxo=0
+        
+        for i in tx_id:
+            if utxo <= amount:
+                utxo +=i['value']
+                txinp={'txid':i['txid'],'vout':i['vout']}
+                input.append(txinp)
+
+        amount=amount/100000000
+        output={recipient:amount}
+        watching={"includeWatching":True}
+        cv=rpc.walletcreatefundedpsbt(input,[output],0,watching)
+        psbt=cv['psbt']
+
+
+
+        psbt_obj = PSBT.parse_base64(psbt, network='testnet')
+
+        service_key=address.service_key
+
+        psbt_obj.sign_with_private_keys([service_key])
+
+        try:
+            
+            psbt_hex = psbt_obj.serialiaze_base64()
+            
+            Transactions.objects.create(
+                address=address,
+                txn_hex=psbt_hex,
+            )
+
+            return Response({
+                'status': status.HTTP_201_CREATED,
+                'psbt': str(psbt_hex) 
+            })
+
+        except Exception as e:
+            return Response({
+                'error': str(e)
+            })
+
+
+
         
 
