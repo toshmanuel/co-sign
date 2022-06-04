@@ -19,38 +19,38 @@ class CreateTransactionView(APIView):
 
     def post(self, request):
 
-        address = Addresses.objects.get(
-            address_generated=request.data['address'])
-        address_generated = address.address_generated
-        print(address_generated)
-
-        transaction_request = Session().get(
-            url=f"https://blockstream.info/testnet/api/address/{address_generated}/utxo")
-        print(transaction_request.json())
         amount_to_send = request.data['amount']
         recipient = request.data['recipient']
         utxo = 0
         txn_inputs = []
+        user_id = request.user.id
+        addresses = Addresses.objects.filter(user_id=user_id).all()
+        
+        for address in addresses:
+            transaction_request = Session().get(
+            url=f"https://blockstream.info/testnet/api/address/{address.address_generated}/utxo")
+            for tran in transaction_request.json():
+                if amount_to_send + 1000 >= utxo:
 
-        for tran in transaction_request.json():
+                    utxo = utxo + tran['value']
+                    pub_list = list(address.redeem_script.split(' '))
+
+                    pub_list.pop(0)
+                    while len(pub_list) > 3:
+                        pub_list.pop(len(pub_list) - 1)
+
+                    redeem = RedeemScript.create_p2sh_multisig(
+                        quorum_m=2, pubkey_hexes=pub_list, expected_addr_network='testnet')
+                    print(redeem)
+
+                    inp = TxIn(bytes.fromhex(
+                        tran['txid']), tran['vout'], script_sig=redeem)
+                    txn_inputs.append(inp)
+            
             if amount_to_send + 1000 >= utxo:
+                break
 
-                utxo = utxo + tran['value']
-                pub_list = list(address.redeem_script.split(' '))
-
-                pub_list.pop(0)
-                while len(pub_list) > 3:
-                    pub_list.pop(len(pub_list) - 1)
-
-                redeem = RedeemScript.create_p2sh_multisig(
-                    quorum_m=2, pubkey_hexes=pub_list, expected_addr_network='testnet')
-                print(redeem)
-
-                inp = TxIn(bytes.fromhex(
-                    tran['txid']), tran['vout'], script_sig=redeem)
-                txn_inputs.append(inp)
-
-        print(utxo)
+        
         fee = (len(txn_inputs) + 2) * 146 + 2 * 34 + 20
         print(fee)
         output1 = TxOut.to_address(recipient, amount_to_send)
@@ -97,7 +97,6 @@ class CreateTransactionView(APIView):
         return Response(
             {
                 "status": status.HTTP_201_CREATED,
-                "transaction id": transaction.transaction_id,
                 "fee": txn.fee(),
                 "amount": transaction.amount_sent,
                 "recipient": transaction.recipient_address,
