@@ -135,6 +135,21 @@ postgres
 
 
 
+## Frontend
+
+### Requirements
+
+Install Flutter: https://docs.flutter.dev/get-started/install
+
+### Running The Frontend
+
+1. clone the repository ```git clone https://github.com/toshmanuel/co-sign.git```
+1. ```cd Frontend```
+1. Run: ```flutter pub get```
+1. Run: ```flutter run```
+
+This demo runs on iOS and Android and uses a few common libraries to make it functional. See the ```pubspec.yaml``` for the libraries used.
+
 ## Authors
 
 👤 **toshmanuel**

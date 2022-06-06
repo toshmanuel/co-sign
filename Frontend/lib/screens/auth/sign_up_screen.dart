@@ -28,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool loading = false;
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
-  SignUpVariable() {
+  signUpVariable() {
     return {
       'email': emailController.text,
       'password': passwordController.text,
@@ -197,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               setState(() => loading = true);
 
                               final signUp = await _authenticationController
-                                  .signUpQuery(SignUpVariable());
+                                  .signUpQuery(signUpVariable());
                               if (signUp) {
                                 Navigator.pushReplacement(
                                   context,
