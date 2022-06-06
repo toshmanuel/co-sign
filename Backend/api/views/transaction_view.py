@@ -171,6 +171,36 @@ class GetAllTransactionsView(APIView):
             "transactions" : transaction_list
         })
 
+class GetAllRecievedTransactionsView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user_id = request.user.id
+        addresses = Addresses.objects.filter(user_id=user_id).all()
+        
+        transaction_list =[]
+        for address in addresses:
+            transaction_request = Session().get(
+            url=f"https://blockstream.info/testnet/api/address/{address.address_generated}/utxo")
+            print(transaction_request.json())
+            transactions = [
+            {
+                "id": i['txid'],
+                "amount": i['value'],
+                "recipient": address.address_generated,
+                "broadcasted": True,
+            }
+            
+            for i in transaction_request.json()
+        ]
+            transaction_list = transaction_list + transactions
+
+        return Response({
+            'status': status.HTTP_200_OK,
+            'transactions': transaction_list
+
+        })
+
 class TransactionDetailsView(APIView):
 
     permission_classes = (IsAuthenticated,)
