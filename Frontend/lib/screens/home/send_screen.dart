@@ -15,11 +15,10 @@ class SendScreen extends StatefulWidget {
 }
 
 class _SendScreenState extends State<SendScreen> {
-  final addressController = TextEditingController();
-  final recipientController = TextEditingController();
-  final amountController = TextEditingController();
-  final privateKeyController = TextEditingController();
-  final privateKeyTwoController = TextEditingController();
+  TextEditingController recipientController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController privateKeyController = TextEditingController();
+  TextEditingController privateKeyTwoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -33,7 +32,7 @@ class _SendScreenState extends State<SendScreen> {
 
     return {
       'recipient': recipientController.text,
-      'amount': amountController.text,
+      'amount': int.parse(amountController.text),
       'private_keys': privateKeys,
     };
   }
@@ -43,8 +42,7 @@ class _SendScreenState extends State<SendScreen> {
     return Scaffold(
       body: GetBuilder<TransactionController>(
         builder: (_) => ModalProgressHUD(
-          inAsyncCall: _transactionController.isLoading,
-          progressIndicator: const Loading(),
+          inAsyncCall: false,
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -166,14 +164,8 @@ class _SendScreenState extends State<SendScreen> {
                   ),
                   CustomButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          loading = true;
-                        });
-                        final createTnx = await _transactionController
-                            .createTransactionQuery(createTransVariable());
-                        if (createTnx) {}
-                      }
+                      await _transactionController
+                          .createTransactionQuery(createTransVariable());
                     },
                     text: Text('Create Transaction',
                         style: AppTextStyle.textSize21

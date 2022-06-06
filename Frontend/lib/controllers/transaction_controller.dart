@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/data/api/api_handlers/api_handler.dart';
 import 'package:frontend/data/data.dart';
 import 'package:frontend/data/models/unbroadcasted_transactions.dart';
@@ -24,33 +25,31 @@ class TransactionController extends GetxController {
     userToken = localStorage.getString(tokenResponse);
   }
 
-  createTransactionQuery(Map<String, dynamic> createTransactionDetails) async {
+  Future<String> createTransactionQuery(
+      Map<String, dynamic> createTransactionDetails) async {
     await getCurrentToken();
-    isLoading = true;
-    update();
     const endPoint = '$baseUrl/transactions/';
     final response = await _coSignApi.post(endPoint,
         body: createTransactionDetails, token: userToken);
     if (response?.statusCode == 200) {
-      createTransaction = CreateTransaction.fromJson(response!.data);
-      isLoading = false;
+      final createTransaction = CreateTransaction.fromJson(response!.data);
+      final transactionId = createTransaction.transactionId;
+      showToastAnyWhere('Sent Succefully', gravity: ToastGravity.CENTER);
       update();
-      return Future.value(false);
+      return Future.value("");
     }
-    isLoading = true;
-    return Future.value(false);
+    return Future.value('');
   }
 
-  broadcastTransactionQuery(
-      Map<String, dynamic> broadcastTransactionDetails) async {
-    getCurrentToken();
+  broadcastTransactionQuery(int? id) async {
+    await getCurrentToken();
     isLoading = true;
     update();
-    const endPoint = '$baseUrl/transactions/41/broadcast/';
-    final response = await _coSignApi.post(endPoint,
-        body: broadcastTransactionDetails, token: userToken);
+    final endPoint = '$baseUrl/transactions/$id/broadcast/';
+    final response = await _coSignApi.post(endPoint, token: userToken);
     if (response?.statusCode == 200) {
       isLoading = false;
+      unbroadcastedTransactionsQuery();
       update();
       return Future.value(false);
     }
@@ -59,7 +58,7 @@ class TransactionController extends GetxController {
   }
 
   unbroadcastedTransactionsQuery() async {
-    getCurrentToken();
+    await getCurrentToken();
     isLoading = true;
     update();
     const endPoint = '$baseUrl/transactions/unbroadcast/';
@@ -74,7 +73,7 @@ class TransactionController extends GetxController {
   }
 
   getAllTransactionsQuery() async {
-    getCurrentToken();
+    await getCurrentToken();
     isLoading = true;
     update();
     const endPoint = '$baseUrl/transactions/all/';
@@ -87,11 +86,11 @@ class TransactionController extends GetxController {
     return getAllTransactions;
   }
 
-  transactionDetailsQuery() async {
+  transactionDetailsQuery(int? id) async {
     getCurrentToken();
     isLoading = true;
     update();
-    const endPoint = '$baseUrl/transactions/41/';
+    final endPoint = '$baseUrl/transactions/$id/';
     final response = await _coSignApi.get(endPoint, token: userToken);
     if (response?.statusCode == 200) {
       isLoading = false;

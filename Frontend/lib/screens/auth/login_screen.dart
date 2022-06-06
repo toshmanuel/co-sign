@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,6 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //Todo: Remove this
+    if (kDebugMode) {
+      emailController.text = 'jay@byna.com';
+      passwordController.text = 'P@55w0rd';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

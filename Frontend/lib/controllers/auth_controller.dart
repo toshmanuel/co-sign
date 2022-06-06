@@ -13,39 +13,57 @@ class AuthenticationController extends GetxController {
 
   final _authServices = AuthServices();
 
-  Future<bool> siginUpQuery(Map<String, dynamic> signUpDetails) async {
-    isLoading = true;
-    update();
-    const endPoint = '$baseUrl/register/';
-    final response = await _coSignApi.post(endPoint, body: signUpDetails);
-    if (response?.statusCode == 201) {
-      userRegister = UserRegister.fromJson(response!.data);
-      isLoading = false;
-      update();
-      return Future.value(true);
-    }
-    isLoading = true;
-    return Future.value(false);
-  }
-
-  Future<bool> signInQuery(Map<String, dynamic> signInDetails) async {
+  Future<bool> signUpQuery(Map<String, dynamic> signUpDetails) async {
     isLoading = true;
     update();
     try {
-      const endPoint = '$baseUrl/login/';
-      final response = await _coSignApi.post(endPoint, body: signInDetails);
-      if (response?.statusCode == 200) {
-        userLogin = UserLogin.fromJson(response!.data);
-       await AuthServices.getInstance.saveUserDetails(userLogin, isLogin: true);
+      const endPoint = '$baseUrl/register/';
+
+      final response = await _coSignApi.post(endPoint, body: signUpDetails);
+      if (response?.statusCode == 201) {
+        userRegister = UserRegister.fromJson(response!.data);
         isLoading = false;
         update();
         return Future.value(true);
       }
-      isLoading = true;
-      return Future.value(false);
+
+      isLoading = false;
+      return Future.value(true);
     } catch (e) {
+      print(e);
       isLoading = false;
       update();
+      return Future.value(false);
+    }
+  }
+
+  void setLoading(bool status) => isLoading = status;
+
+  Future<bool> signInQuery(Map<String, dynamic> signInDetails) async {
+    setLoading(true);
+    update();
+
+    try {
+      const endPoint = '$baseUrl/login/';
+      final response = await _coSignApi.post(endPoint, body: signInDetails);
+
+      if (response?.statusCode == 200) {
+        userLogin = UserLogin.fromJson(response!.data);
+        await AuthServices.getInstance
+            .saveUserDetails(userLogin, isLogin: true);
+
+        setLoading(false);
+        update();
+
+        return Future.value(true);
+      }
+
+      setLoading(false);
+      return Future.value(false);
+    } catch (e) {
+      setLoading(false);
+      update();
+
       return Future.value(false);
     }
   }
