@@ -6,7 +6,6 @@ export 'generate_address.dart';
 export 'get_all_transaction.dart';
 export 'get_new_address.dart';
 export 'total_utxo.dart';
-export 'total_utxo.dart';
 export 'transaction_details.dart';
 export 'user_login.dart';
 export 'user_register.dart';

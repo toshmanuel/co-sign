@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/controllers/controllers.dart';
 import 'package:frontend/utils/utils.dart';
+import 'package:frontend/widgets/widgets.dart';
 import 'package:get/get.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class AddressList extends StatefulWidget {
   const AddressList({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class _AddressListState extends State<AddressList> {
 
   final _addressController = Get.put(AddressController());
   void init() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _addressController.addressListQuery();
     });
   }
@@ -36,44 +38,49 @@ class _AddressListState extends State<AddressList> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<AddressController>(
-        builder: (_) => ListView.builder(
-          padding: const EdgeInsets.all(10),
-          itemCount: _addressController.addressList?.addresses.length,
-          itemBuilder: (context, index) {
-            return Card(
-              color: Colors.white,
-              borderOnForeground: true,
-              margin: const EdgeInsets.all(5),
-              elevation: 5,
-              child: ListTile(
-                title: TextButton.icon(
-                  onPressed: () {
-                    Clipboard.setData(
-                      ClipboardData(
-                        text: _addressController.addressList?.addresses[index],
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Copied address to clipboard"),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.copy_rounded,
-                    size: 20.0,
-                    color: AppColors.primaryColor,
-                  ),
-                  label: Text(
-                    _addressController.addressList?.addresses[index] ?? '',
-                    style: AppTextStyle.textSize12.copyWith(
-                        color: AppColors.lightNeutral,
-                        fontWeight: FontWeight.bold),
+        builder: (_) => ModalProgressHUD(
+          inAsyncCall: _addressController.isLoading,
+          progressIndicator: const Loading(),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: _addressController.addressList?.addresses.length,
+            itemBuilder: (context, index) {
+              return Card(
+                color: Colors.white,
+                borderOnForeground: true,
+                margin: const EdgeInsets.all(5),
+                elevation: 5,
+                child: ListTile(
+                  title: TextButton.icon(
+                    onPressed: () {
+                      Clipboard.setData(
+                        ClipboardData(
+                          text:
+                              _addressController.addressList?.addresses[index],
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Copied address to clipboard"),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.copy_rounded,
+                      size: 20.0,
+                      color: AppColors.primaryColor,
+                    ),
+                    label: Text(
+                      _addressController.addressList?.addresses[index] ?? '',
+                      style: AppTextStyle.textSize12.copyWith(
+                          color: AppColors.lightNeutral,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
