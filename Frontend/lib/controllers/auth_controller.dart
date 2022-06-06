@@ -36,6 +36,7 @@ class AuthenticationController extends GetxController {
       final response = await _coSignApi.post(endPoint, body: signInDetails);
       if (response?.statusCode == 200) {
         userLogin = UserLogin.fromJson(response!.data);
+       await AuthServices.getInstance.saveUserDetails(userLogin, isLogin: true);
         isLoading = false;
         update();
         return Future.value(true);

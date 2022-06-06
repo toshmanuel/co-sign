@@ -1,8 +1,11 @@
 export 'address_info.dart';
 export 'address_list.dart';
+export 'broadcast_transaction.dart';
+export 'create_transaction.dart';
 export 'generate_address.dart';
 export 'get_all_transaction.dart';
 export 'get_new_address.dart';
+export 'total_utxo.dart';
 export 'total_utxo.dart';
 export 'transaction_details.dart';
 export 'user_login.dart';
