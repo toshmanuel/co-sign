@@ -39,6 +39,8 @@ class TransactionController extends GetxController {
       showToastAnyWhere('Sent Succefully', gravity: ToastGravity.CENTER);
       update();
       return Future.value("");
+    } else {
+       showToastAnyWhere('An error occur', gravity: ToastGravity.CENTER);
     }
     return Future.value('');
   }
@@ -80,6 +82,7 @@ class TransactionController extends GetxController {
     update();
     const endPoint = '$baseUrl/transactions/all/';
     final response = await _coSignApi.get(endPoint, token: userToken);
+    print(response);
     if (response?.statusCode == 200) {
       isLoading = false;
       update();

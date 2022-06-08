@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/controllers/controllers.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
@@ -19,6 +20,7 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
   void init() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _transactionController.unbroadcastedTransactionsQuery();
+      
     });
   }
 
@@ -121,7 +123,7 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
                                   RichText(
                                     textAlign: TextAlign.left,
                                     text: TextSpan(
-                                      text: 'Broadcasted: ',
+                                      text: 'Broadcast: ',
                                       style: AppTextStyle.textSize13.copyWith(
                                           color: AppColors.primaryColor,
                                           fontWeight: FontWeight.bold),
@@ -160,28 +162,55 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
                                     ),
                                   ),
                                   Height10(),
-                                  Center(
-                                    child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                          side: const BorderSide(
-                                              width: 1.5,
-                                              color: AppColors.primaryColor)),
-                                      onPressed: () {
-                                        int? id = _transactionController
-                                            .unbroadcastedTransactions!
-                                            .transactions![index]
-                                            .id;
-
-                                        _transactionController
-                                            .broadcastTransactionQuery(id);
-                                      },
-                                      child: const Text(
-                                        'Broadcard Transaction',
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                            side: const BorderSide(
+                                                width: 1.5,
+                                                color: AppColors.primaryColor)),
+                                        onPressed: () {
+                                          Clipboard.setData(
+                                            ClipboardData(text: 'Jaykon'),
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  "ID copied to clipboard"),
+                                            ),
+                                          );
+                                        },
+                                        child: const Text(
+                                          'Copy Txn hex',
+                                          style: TextStyle(
+                                              color: AppColors.primaryColor),
+                                        ),
                                       ),
-                                    ),
-                                  )
+                                      OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                            side: const BorderSide(
+                                                width: 1.5,
+                                                color: AppColors.primaryColor)),
+                                        onPressed: () {
+                                          int? id = _transactionController
+                                              .unbroadcastedTransactions!
+                                              .transactions![index]
+                                              .id;
+
+                                          _transactionController
+                                              .broadcastTransactionQuery(id);
+                                        },
+                                        child: const Text(
+                                          'Broadcard Transaction',
+                                          style: TextStyle(
+                                              color: AppColors.primaryColor),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

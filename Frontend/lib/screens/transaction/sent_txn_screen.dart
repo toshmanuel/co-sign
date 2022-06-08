@@ -112,7 +112,7 @@ class _SentTnxScreenState extends State<SentTnxScreen> {
                             RichText(
                               textAlign: TextAlign.left,
                               text: TextSpan(
-                                text: 'Broadcasted: ',
+                                text: 'Broadcast: ',
                                 style: AppTextStyle.textSize13.copyWith(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold),

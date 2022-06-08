@@ -25,11 +25,13 @@ class _SendScreenState extends State<SendScreen> {
   final _transactionController = Get.put(TransactionController());
 
   createTransVariable() {
-    final privateKeys = [
-      privateKeyController.text,
-      privateKeyTwoController.text
-    ];
+    final priavteKey1 = privateKeyController.text;
+    final privateKey2 = privateKeyTwoController.text;
 
+    List privateKeys = [priavteKey1];
+    if (privateKey2.isNotEmpty) {
+      privateKeys.add(privateKey2);
+    }
     return {
       'recipient': recipientController.text,
       'amount': int.parse(amountController.text),
