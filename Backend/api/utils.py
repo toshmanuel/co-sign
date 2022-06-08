@@ -37,6 +37,7 @@ def get_all_transactions(addresses, is_broadcasted=None):
                 "recipient": i.recipient_address,
                 "amount": i.amount_sent,
                 "fee": i.txn_fee,
+                "transaction hex": i.txn_hex,
                 "date created": i.created_at,
                 "broadcasted": i.is_broadcasted,
             }
