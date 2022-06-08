@@ -41,7 +41,7 @@ class CreateTransactionView(APIView):
 
                     redeem = RedeemScript.create_p2sh_multisig(
                         quorum_m=2, pubkey_hexes=pub_list, expected_addr_network='testnet')
-                    print(redeem)
+                    
 
                     inp = TxIn(bytes.fromhex(
                         tran['txid']), tran['vout'], script_sig=redeem)
@@ -52,7 +52,7 @@ class CreateTransactionView(APIView):
 
         
         fee = (len(txn_inputs) + 2) * 146 + 2 * 34 + 20
-        print(fee)
+        
         output1 = TxOut.to_address(recipient, amount_to_send)
         output2 = TxOut.to_address(
             address.address_generated, utxo - (amount_to_send + fee))
@@ -67,8 +67,6 @@ class CreateTransactionView(APIView):
             p_k_WIF_2 = address.service_key
 
         try:
-            print(p_k_WIF_1)
-            print(p_k_WIF_2)
             pkey1 = PrivateKey.parse(p_k_WIF_1)
             pkey2 = PrivateKey.parse(p_k_WIF_2)
         except:
@@ -117,11 +115,10 @@ class BroadcastTransactionView(APIView):
             url='https://blockstream.info/testnet/api/tx', data=txn_hex)
 
         txn_id = tnx_pub_req.text
-        print(txn_id)
+        
         transaction.tx_id = txn_id
         transaction.is_broadcasted = True
         transaction.save()
-        print(transaction.tx_id)
 
         return Response(
             {
@@ -183,7 +180,7 @@ class GetAllRecievedTransactionsView(APIView):
         for address in addresses:
             transaction_request = Session().get(
             url=f"https://blockstream.info/testnet/api/address/{address.address_generated}/utxo")
-            print(transaction_request.json())
+            
             transactions = [
             {
                 "id": i['txid'],
