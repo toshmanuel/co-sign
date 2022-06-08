@@ -42,7 +42,8 @@ class _SendScreenState extends State<SendScreen> {
     return Scaffold(
       body: GetBuilder<TransactionController>(
         builder: (_) => ModalProgressHUD(
-          inAsyncCall: false,
+          inAsyncCall: _transactionController.isLoading,
+          progressIndicator: const Loading(),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
