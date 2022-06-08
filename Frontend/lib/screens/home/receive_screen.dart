@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/controllers/controllers.dart';
+import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
+import 'package:get/get.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class ReceiveScreen extends StatefulWidget {
-  const ReceiveScreen({Key? key}) : super(key: key);
+  final String address;
+  final bool generateAddress;
+  const ReceiveScreen(
+      {Key? key, this.generateAddress = true, this.address = ''})
+      : super(key: key);
   static const id = 'receive_screen';
 
   @override
@@ -13,76 +21,103 @@ class ReceiveScreen extends StatefulWidget {
 }
 
 class _ReceiveScreenState extends State<ReceiveScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController password2Controller = TextEditingController();
-  TextEditingController privateKeyController = TextEditingController();
-  static List<String> friendsList = [];
+  String address = '';
+  bool loading = false;
+  final _addressController = Get.put(AddressController());
 
-  final _formKey = GlobalKey<FormState>();
+  void init() async {
+    setState(() => loading = true);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (widget.generateAddress) {
+        address = await _addressController.getNewAddressQuery() ?? '';
+      } else {
+        address = widget.address;
+      }
+
+      setState(() => loading = false);
+    });
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 20, right: 30, left: 30, bottom: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColors.skyBlueColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          AppVectors.arrowLeft,
-                          color: AppColors.primaryColor,
+        child: GetBuilder<AddressController>(
+          builder: (_) => ModalProgressHUD(
+            inAsyncCall: _addressController.isLoading,
+            progressIndicator: const Loading(),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, right: 30, left: 30, bottom: 10),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                              color: AppColors.skyBlueColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                AppVectors.arrowLeft,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(context, HomeScreen.id);
+                          },
                         ),
+                        Text(
+                          'Receive Satoshis',
+                          style: AppTextStyle.textSize18.copyWith(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    if (loading)
+                      CircularProgressIndicator()
+                    else ...[
+                      Text(
+                        address,
+                        style: AppTextStyle.textSize14.copyWith(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    onTap: () {
-                      goBack(context);
-                    },
-                  ),
-                  Text(
-                    'Receive Satoshis',
-                    style: AppTextStyle.textSize18.copyWith(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Text(
-                '2N9EgUg8Rt8WtvT1FgNHe55BJ41zbe1SUF7',
-                style: AppTextStyle.textSize14.copyWith(
-                    color: AppColors.primaryColor, fontWeight: FontWeight.bold),
-              ),
-              CustomButton(
-                onPressed: () {
-                  Clipboard.setData(
-                    const ClipboardData(text: "your text"),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Text copied to clipboard"),
-                    ),
-                  );
-                },
-                text: Text('Copy Address',
-                    style: AppTextStyle.textSize21
-                        .copyWith(color: AppColors.whiteColor)),
-                height: 60,
-                width: 335,
-              ),
-            ],
+                      CustomButton(
+                        onPressed: () {
+                          Clipboard.setData(
+                            ClipboardData(text: address),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Copied Address to clipboard"),
+                            ),
+                          );
+                        },
+                        text: Text('Copy Address',
+                            style: AppTextStyle.textSize21
+                                .copyWith(color: AppColors.whiteColor)),
+                        height: 60,
+                        width: 335,
+                      ),
+                    ],
+                  ]),
+            ),
           ),
         ),
       ),

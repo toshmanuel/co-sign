@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,12 +28,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool loading = false;
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
-  SignUpVariable() {
+  signUpVariable() {
     return {
       'email': emailController.text,
       'password': passwordController.text,
       'password2': password2Controller.text,
     };
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    //Todo: Remove this
+    if (kDebugMode) {
+      emailController.text = 'jay33@byna.com';
+      passwordController.text = 'P@55w0rd';
+      password2Controller.text = 'P@55w0rd';
+    }
   }
 
   @override
@@ -181,11 +194,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CustomButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                loading = true;
-                              });
+                              setState(() => loading = true);
+
                               final signUp = await _authenticationController
-                                  .siginUpQuery(SignUpVariable());
+                                  .signUpQuery(signUpVariable());
                               if (signUp) {
                                 Navigator.pushReplacement(
                                   context,
@@ -193,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     builder: (_) => const LoginScreen(),
                                   ),
                                 );
-                              } else {}
+                              }
                             } else {}
                           },
                           text: Text('Sign Up',

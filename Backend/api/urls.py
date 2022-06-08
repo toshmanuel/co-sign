@@ -2,7 +2,7 @@ from django.urls import path
 
 from api.views.psb_transaction_view import SignPSBTransactionView, CreatePSBT
 from .views.auth_view import LoginAPI, UserDetailAPI,RegisterUserAPIView
-from .views.transaction_view import BroadcastTransactionView, CreateTransactionView, GetAllTransactionsView, GetUnBroadcastTransactionsView, TransactionDetailsView
+from .views.transaction_view import BroadcastTransactionView, CreateTransactionView, GetAllRecievedTransactionsView, GetAllTransactionsView, GetUnBroadcastTransactionsView, TransactionDetailsView
 from knox import views as knox_views
 from .views.address_view import GenerateAddress,GetAddressByUser, ExportAddress, GetAddressInfo, GetAllUTXOByAddress, GenerateNewAddress
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
   path('api/v1/transactions/<transaction_id>/', TransactionDetailsView.as_view()),
   path('api/v1/psbt/', SignPSBTransactionView.as_view()),
   path('api/v1/createpsbt/', CreatePSBT.as_view()),
+  path('api/v1/received/transactions/', GetAllRecievedTransactionsView.as_view()),
 ]

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Get.put(AuthenticationController());
   final _formKey = GlobalKey<FormState>();
 
-  SignInVariable() {
+  signInVariable() {
     return {
       'username': emailController.text,
       'password': passwordController.text,
@@ -32,6 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //Todo: Remove this
+    if (kDebugMode) {
+      emailController.text = 'jay@byna.com';
+      passwordController.text = 'P@55w0rd';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,160 +53,156 @@ class _LoginScreenState extends State<LoginScreen> {
           inAsyncCall: _authenticationController.isLoading,
           progressIndicator: const Loading(),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20, right: 30, left: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      Center(
-                        child: SvgPicture.asset(
-                          AppVectors.logo,
-                          width: 150,
-                          height: 150,
-                        ),
+            padding: const EdgeInsets.only(top: 20, right: 30, left: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    Center(
+                      child: SvgPicture.asset(
+                        AppVectors.logo,
+                        width: 150,
+                        height: 150,
                       ),
-                      Height10(),
-                      Text(
-                        coSignText,
-                        style: AppTextStyle.textSize36
-                            .copyWith(color: AppColors.primaryColor),
-                      ),
-                      Height10(),
-                      Text(
-                        loginText,
-                        style: AppTextStyle.textSize24
-                            .copyWith(color: AppColors.lightNeutral),
-                      ),
-                      Height15(),
-                      Column(
-                        children: [
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                TextFormField(
+                    ),
+                    Height10(),
+                    Text(
+                      coSignText,
+                      style: AppTextStyle.textSize36
+                          .copyWith(color: AppColors.primaryColor),
+                    ),
+                    Height10(),
+                    Text(
+                      loginText,
+                      style: AppTextStyle.textSize24
+                          .copyWith(color: AppColors.lightNeutral),
+                    ),
+                    Height15(),
+                    Column(
+                      children: [
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                cursorColor: AppColors.primaryColor,
+                                autofocus: false,
+                                controller: emailController,
+                                decoration: AppDecorations.formStyle.copyWith(
+                                  label: Text(
+                                    'Email',
+                                    style: AppTextStyle.textSize15.copyWith(
+                                        color: AppColors.primaryColor),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return ("Email Is Requied");
+                                  }
+                                },
+                              ),
+                              Height10(),
+                              TextFormField(
                                   cursorColor: AppColors.primaryColor,
+                                  controller: passwordController,
+                                  onSaved: (value) {
+                                    passwordController.text = value!;
+                                  },
                                   autofocus: false,
-                                  controller: emailController,
+                                  textInputAction: TextInputAction.done,
+                                  obscureText: _obscureText,
                                   decoration: AppDecorations.formStyle.copyWith(
                                     label: Text(
-                                      'Email',
+                                      'Password',
                                       style: AppTextStyle.textSize15.copyWith(
                                           color: AppColors.primaryColor),
                                     ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return ("Email Is Requied");
-                                    }
-                                  },
-                                ),
-                                Height10(),
-                                TextFormField(
-                                    cursorColor: AppColors.primaryColor,
-                                    controller: passwordController,
-                                    onSaved: (value) {
-                                      passwordController.text = value!;
-                                    },
-                                    autofocus: false,
-                                    textInputAction: TextInputAction.done,
-                                    obscureText: _obscureText,
-                                    decoration:
-                                        AppDecorations.formStyle.copyWith(
-                                      label: Text(
-                                        'Password',
-                                        style: AppTextStyle.textSize15.copyWith(
-                                            color: AppColors.primaryColor),
-                                      ),
-                                      suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            _obscureText = !_obscureText;
-                                          });
-                                        },
-                                        child: Icon(
-                                          _obscureText
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                          color: AppColors.lightNeutral,
-                                        ),
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _obscureText = !_obscureText;
+                                        });
+                                      },
+                                      child: Icon(
+                                        _obscureText
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: AppColors.lightNeutral,
                                       ),
                                     ),
-                                    validator: passwordValidator),
-                              ],
-                            ),
+                                  ),
+                                  validator: passwordValidator),
+                            ],
                           ),
-                          Height15(),
+                        ),
+                        Height15(),
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    CustomButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            loading = true;
+                          });
+                          final signIn = await _authenticationController
+                              .signInQuery(signInVariable());
+                          if (signIn) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const HomeScreen(),
+                              ),
+                            );
+                          }
+                        } else {}
+                      },
+                      text: Text('Login',
+                          style: AppTextStyle.textSize21
+                              .copyWith(color: AppColors.whiteColor)),
+                      height: 60,
+                      width: 335,
+                    ),
+                    Height10(),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: dontHaveAnAccountText + '  ',
+                        style: AppTextStyle.textSize13
+                            .copyWith(color: AppColors.lightNeutral),
+                        children: [
+                          TextSpan(
+                            text: signUpText,
+                            style: AppTextStyle.textSize13.copyWith(
+                              color: AppColors.primaryColor,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushNamed(context, SignUpScreen.id);
+                              },
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      CustomButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              loading = true;
-                            });
-                            final signIn = await _authenticationController
-                                .signInQuery(SignInVariable());
-                            if (signIn) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const HomeScreen(),
-                                ),
-                              );
-                            }
-                          } else {}
-                        },
-                        text: Text('Login',
-                            style: AppTextStyle.textSize21
-                                .copyWith(color: AppColors.whiteColor)),
-                        height: 60,
-                        width: 335,
-                      ),
-                      Height10(),
-                      RichText(
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, ForgetPassword.id);
+                      },
+                      child: Text(
+                        forgotPasswordText,
                         textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: dontHaveAnAccountText + '  ',
-                          style: AppTextStyle.textSize13
-                              .copyWith(color: AppColors.lightNeutral),
-                          children: [
-                            TextSpan(
-                              text: signUpText,
-                              style: AppTextStyle.textSize13.copyWith(
-                                color: AppColors.primaryColor,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamed(context, SignUpScreen.id);
-                                },
-                            ),
-                          ],
+                        style: AppTextStyle.textSize13.copyWith(
+                          color: AppColors.primaryColor,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, ForgetPassword.id);
-                        },
-                        child: Text(
-                          forgotPasswordText,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.textSize13.copyWith(
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

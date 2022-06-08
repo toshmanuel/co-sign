@@ -21,28 +21,31 @@ class CoSignApi {
           queryParameters: queryParameters,
           options: token == null
               ? null
-              : Options(headers: {'Authorization': 'Bearer $token'}));
+              : Options(headers: {'Authorization': 'Token $token'}));
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
-      if (e.response!.data!['message'] == String) {
+      if (e.response?.data['message'] == String) {
       } else if (e.response!.data!['message'] != String) {}
     }
   }
 
   Future<dynamic> post(
     String string, {
-    required Map<String, dynamic> body,
+    Map<String, dynamic>? body,
     String? token,
   }) async {
+    Map<String, dynamic>? headers =
+        token != null ? {'Authorization': 'Token $token'} : null;
+
     try {
       final response = await dio.post(string,
-          data: body,
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+          data: body, options: Options(headers: headers));
 
       return ApiUtils.toApiResponse(response);
     } on DioError catch (e) {
-      // if (e.response!.data!['message'] == String) {
+      print(e);
+      // if (e.response?.data['message'] == String) {
       //   showToastAnyWhere(e.response!.data!['message']);
       // } else if (e.response!.data!['message'] != String) {
       //   showToastAnyWhere(e.response!.data!['message']);

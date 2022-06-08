@@ -10,6 +10,7 @@ class AddressController extends GetxController {
   GenerateAddresses? generateAddresses;
   AddressInfo? addressInfo;
   AddressList? addressList;
+  TotalUTXO? totalUTXO;
   GetNewAddress? getNewAddress;
 
   bool isLoading = false;
@@ -22,21 +23,23 @@ class AddressController extends GetxController {
     userToken = localStorage.getString(tokenResponse);
   }
 
-  generateAddressQuery(Map<String, dynamic> generateAddressDetails) async {
+  Future<String> generateAddressQuery(
+      Map<String, dynamic> generateAddressDetails) async {
     await getCurrentToken();
-    isLoading = true;
-    update();
-    const endPoint = '$baseUrl/generateaddress';
+
+    const endPoint = '$baseUrl/generateaddress/';
     final response = await _coSignApi.post(endPoint,
         body: generateAddressDetails, token: userToken);
+
     if (response?.statusCode == 200) {
-      generateAddresses = GenerateAddresses.fromJson(response!.data);
+      final generateAddresses = GenerateAddresses.fromJson(response!.data);
+      final address = generateAddresses.address;
       isLoading = false;
-      update();
-      return Future.value(true);
+
+      return Future.value(address);
     }
-    isLoading = true;
-    return Future.value(false);
+
+    return Future.value('');
   }
 
   addressInfoQuery(int? address) async {
@@ -53,31 +56,52 @@ class AddressController extends GetxController {
     return addressInfo;
   }
 
-  addressListQuery() async {
+  Future<AddressList?> addressListQuery() async {
     getCurrentToken();
     isLoading = true;
     update();
     const endPoint = '$baseUrl/addresslist/';
     final response = await _coSignApi.get(endPoint, token: userToken);
+
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
       addressList = AddressList.fromJson(response!.data);
     }
+
     return addressList;
   }
 
-  getNewAddressQuery() async {
-    getCurrentToken();
+  totalUTXOQuery() async {
+    await getCurrentToken();
     isLoading = true;
     update();
-    const endPoint = '$baseUrl/generatenewaddress/';
+    const endPoint = '$baseUrl/totalutxo/';
     final response = await _coSignApi.get(endPoint, token: userToken);
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
-      getNewAddress = GetNewAddress.fromJson(response!.data);
+      totalUTXO = TotalUTXO.fromJson(response!.data);
     }
-    return getNewAddress;
+    return totalUTXO;
+  }
+
+  Future<String?> getNewAddressQuery() async {
+    getCurrentToken();
+    isLoading = true;
+    update();
+
+    const endPoint = '$baseUrl/generatenewaddress/';
+    final response = await _coSignApi.get(endPoint, token: userToken);
+
+    if (response?.statusCode == 200) {
+      isLoading = false;
+      update();
+      getNewAddress = GetNewAddress.fromJson(response!.data);
+
+      return getNewAddress?.address;
+    }
+
+    return null;
   }
 }

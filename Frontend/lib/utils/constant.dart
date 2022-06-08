@@ -1,6 +1,6 @@
 import 'package:form_field_validator/form_field_validator.dart';
 
-const baseUrl = 'http://localhost:8000/api/v1';
+const baseUrl = 'http://0.0.0.0:8000/api/v1';
 
 final passwordValidator = MultiValidator(
   [
