@@ -133,7 +133,3 @@ class CreatePSBT(APIView):
                 'error': str(e)
             })
 
-
-           
-
-
