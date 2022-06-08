@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/data/api/api_handlers/api_handler.dart';
 import 'package:frontend/data/data.dart';
+import 'package:frontend/data/models/get_all_receive_transaction.dart';
 import 'package:frontend/data/models/unbroadcasted_transactions.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -14,6 +15,7 @@ class TransactionController extends GetxController {
   GetAllTransactions? getAllTransactions;
   UnbroadcastedTransactions? unbroadcastedTransactions;
   TransactionDetails? transactionDetails;
+  GetAllReceivedTransactions? getAllReceivedTransactions;
 
   bool isLoading = false;
 
@@ -84,6 +86,21 @@ class TransactionController extends GetxController {
       getAllTransactions = GetAllTransactions.fromJson(response.data);
     }
     return getAllTransactions;
+  }
+
+  getAllReceivedQuery() async {
+    await getCurrentToken();
+    isLoading = true;
+    update();
+    const endPoint = '$baseUrl/received/transactions/';
+    final response = await _coSignApi.get(endPoint, token: userToken);
+    if (response?.statusCode == 200) {
+      isLoading = false;
+      update();
+      getAllReceivedTransactions =
+          GetAllReceivedTransactions.fromJson(response.data);
+    }
+    return getAllReceivedTransactions;
   }
 
   transactionDetailsQuery(int? id) async {
