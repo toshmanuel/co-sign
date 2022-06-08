@@ -38,6 +38,7 @@ class GenerateAddress(APIView):
             {"status": status.HTTP_201_CREATED,
                 "address": address.address_generated}
         )
+        
 
 
 class ExportAddress(APIView):
