@@ -3,7 +3,7 @@ from .address import Addresses
 
 # Create your models here.
 class Transactions(models.Model):
-    tx_id =models.CharField(max_length=80, default=None)
+    tx_id =models.CharField(max_length=80, null=True, blank=True)
     address=models.ForeignKey(Addresses, on_delete=models.CASCADE)
     txn_hex=models.CharField(max_length=2000)
     recipient_address=models.CharField(max_length=60, default=None)
