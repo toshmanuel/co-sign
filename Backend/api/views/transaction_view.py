@@ -130,7 +130,6 @@ class BroadcastTransactionView(APIView):
             {
                 "status": status.HTTP_200_OK,
                 "transaction": txn_id,
-                "transaction hex": txn_hex,
                 "broadcasted": True,
             }
         )
