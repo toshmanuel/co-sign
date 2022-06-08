@@ -25,6 +25,7 @@ class CreateTransactionView(APIView):
         txn_inputs = []
         user_id = request.user.id
         addresses = Addresses.objects.filter(user_id=user_id).all()
+        redeem_scripts = []
         
         for address in addresses:
             transaction_request = Session().get(
@@ -46,18 +47,19 @@ class CreateTransactionView(APIView):
                     inp = TxIn(bytes.fromhex(
                         tran['txid']), tran['vout'], script_sig=redeem)
                     txn_inputs.append(inp)
+                    redeem_scripts.append(redeem)
             
             if amount_to_send + 1000 <= utxo:
                 break
 
         
-        fee = (len(txn_inputs) + 2) * 146 + 2 * 34 + 20
-        
+        fee = (len(txn_inputs) + 2) * 146 + 2 * 34 + 200
         output1 = TxOut.to_address(recipient, amount_to_send)
         output2 = TxOut.to_address(
             address.address_generated, utxo - (amount_to_send + fee))
 
         txn = Tx(2, txn_inputs, [output1, output2], network='testnet')
+        
 
         if len(request.data['private_keys']) == 2:
             p_k_WIF_1 = request.data['private_keys'][0]
@@ -77,10 +79,11 @@ class CreateTransactionView(APIView):
                 }
             )
 
+        
         for i in range(len(txn_inputs)):
-            sig1 = txn.get_sig_legacy(i, pkey1, redeem_script=redeem)
-            sig2 = txn.get_sig_legacy(i, pkey2, redeem_script=redeem)
-            txn_inputs[i].finalize_p2sh_multisig([sig1, sig2], redeem)
+            sig1 = txn.get_sig_legacy(i, pkey1, redeem_script=redeem_scripts[i])
+            sig2 = txn.get_sig_legacy(i, pkey2, redeem_script=redeem_scripts[i])
+            txn_inputs[i].finalize_p2sh_multisig([sig1, sig2], redeem_scripts[i])
 
         txn_hex = txn.serialize().hex()
 
@@ -117,6 +120,9 @@ class BroadcastTransactionView(APIView):
         txn_id = tnx_pub_req.text
         
         transaction.tx_id = txn_id
+        print("hello")
+        print(txn_id)
+        print(transaction.tx_id)
         transaction.is_broadcasted = True
         transaction.save()
 
@@ -124,6 +130,7 @@ class BroadcastTransactionView(APIView):
             {
                 "status": status.HTTP_200_OK,
                 "transaction": txn_id,
+                "transaction hex": txn_hex,
                 "broadcasted": True,
             }
         )
