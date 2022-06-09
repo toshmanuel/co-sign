@@ -18,7 +18,7 @@ def generateredeemscript(key1, key2, key3):
     service_key = key_obj.point.sec().hex()
     pubkey_list = [key1, key2, service_key]
     redeem = RedeemScript.create_p2sh_multisig(
-        quorum_m=2, pubkey_hexes=pubkey_list, expected_addr_network='testnet')
+        quorum_m=2, pubkey_hexes=pubkey_list, expected_addr_network='testnet', sort_keys=False)
     return redeem
 
 
@@ -35,6 +35,7 @@ def get_all_transactions(addresses, is_broadcasted=None):
         transactions = [
             {
                 "id": i.id,
+                "transaction id" : i.tx_id,
                 "recipient": i.recipient_address,
                 "amount": i.amount_sent,
                 "fee": i.txn_fee,
@@ -45,6 +46,7 @@ def get_all_transactions(addresses, is_broadcasted=None):
             for i in address_transactions
         ]
         transaction_list = transaction_list + transactions
+        print(transaction_list)
     
     return transaction_list
 
