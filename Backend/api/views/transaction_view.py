@@ -41,7 +41,7 @@ class CreateTransactionView(APIView):
                         pub_list.pop(len(pub_list) - 1)
 
                     redeem = RedeemScript.create_p2sh_multisig(
-                        quorum_m=2, pubkey_hexes=pub_list, expected_addr_network='testnet')
+                        quorum_m=2, pubkey_hexes=pub_list, expected_addr_network='testnet', sort_keys=False)
                     
 
                     inp = TxIn(bytes.fromhex(
@@ -114,15 +114,12 @@ class BroadcastTransactionView(APIView):
         transaction = Transactions.objects.get(id=transaction_id)
         txn_hex = transaction.txn_hex
 
-        tnx_pub_req = Session().post(
+        txn_pub_req = Session().post(
             url='https://blockstream.info/testnet/api/tx', data=txn_hex)
 
-        txn_id = tnx_pub_req.text
-        
+        txn_id = txn_pub_req.text
+       
         transaction.tx_id = txn_id
-        print("hello")
-        print(txn_id)
-        print(transaction.tx_id)
         transaction.is_broadcasted = True
         transaction.save()
 
