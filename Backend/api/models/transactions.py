@@ -5,7 +5,7 @@ from .address import Addresses
 class Transactions(models.Model):
     tx_id =models.CharField(max_length=200, null=True, blank=True)
     address=models.ForeignKey(Addresses, on_delete=models.CASCADE)
-    txn_hex=models.CharField(max_length=2000)
+    txn_hex=models.CharField(max_length=3000)
     recipient_address=models.CharField(max_length=60, default=None)
     amount_sent=models.IntegerField(null=True)
     txn_fee=models.IntegerField(null=True)
