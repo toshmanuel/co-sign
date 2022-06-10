@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/controllers/controllers.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
@@ -131,6 +132,26 @@ class _SentTnxScreenState extends State<SentTnxScreen> {
                             RichText(
                               textAlign: TextAlign.left,
                               text: TextSpan(
+                                text: 'Txn ID: ',
+                                style: AppTextStyle.textSize13.copyWith(
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.bold),
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        transaction?.transactionId.toString() ??
+                                            '',
+                                    style: AppTextStyle.textSize13.copyWith(
+                                      color: AppColors.lightNeutral,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Height3(),
+                            RichText(
+                              textAlign: TextAlign.left,
+                              text: TextSpan(
                                 text: 'Date: ',
                                 style: AppTextStyle.textSize13.copyWith(
                                     color: AppColors.primaryColor,
@@ -144,6 +165,32 @@ class _SentTnxScreenState extends State<SentTnxScreen> {
                                     ),
                                   ),
                                 ],
+                              ),
+                            ),
+                            Center(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(
+                                        width: 1.5,
+                                        color: AppColors.primaryColor)),
+                                onPressed: () {
+                                  Clipboard.setData(
+                                    ClipboardData(
+                                        text: transaction?.transactionId
+                                                .toString() ??
+                                            ''),
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("ID copied to clipboard"),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Copy Txn ID',
+                                  style:
+                                      TextStyle(color: AppColors.primaryColor),
+                                ),
                               ),
                             ),
                           ],

@@ -20,7 +20,6 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
   void init() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _transactionController.unbroadcastedTransactionsQuery();
-      
     });
   }
 
@@ -173,7 +172,11 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
                                                 color: AppColors.primaryColor)),
                                         onPressed: () {
                                           Clipboard.setData(
-                                            ClipboardData(text: 'Jaykon'),
+                                            ClipboardData(
+                                                text: transaction
+                                                        ?.transactionHex
+                                                        .toString() ??
+                                                    ''),
                                           );
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -204,7 +207,7 @@ class _UnbroadcastScreenState extends State<UnbroadcastScreen> {
                                               .broadcastTransactionQuery(id);
                                         },
                                         child: const Text(
-                                          'Broadcard Transaction',
+                                          'Broadcast Transaction',
                                           style: TextStyle(
                                               color: AppColors.primaryColor),
                                         ),

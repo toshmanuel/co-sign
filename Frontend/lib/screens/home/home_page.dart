@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/controllers/address_controller.dart';
-// import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/screens/screens.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
@@ -22,8 +21,6 @@ class _HomePageState extends State<HomePage> {
   final key1Controller = TextEditingController();
   final key2Controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  bool loading = true;
 
   final _addressController = Get.put(AddressController());
   ad.AddressList? addresses;
@@ -125,13 +122,30 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
+                                  OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                        side: const BorderSide(
+                                            width: 1.5,
+                                            color: AppColors.primaryColor)),
+                                    onPressed: () async {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const HomeScreen()));
+                                    },
+                                    child: const Text(
+                                      'Refresh',
+                                      style: TextStyle(
+                                          color: AppColors.primaryColor),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ],
                       ),
-                      Height40(),
                     ],
                   ),
                   Column(

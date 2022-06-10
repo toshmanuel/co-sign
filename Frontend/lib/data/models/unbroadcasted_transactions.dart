@@ -29,6 +29,7 @@ class Transactions {
   String? recipient;
   int? amount;
   int? fee;
+  String? transactionHex;
   String? dateCreated;
   bool? broadcasted;
 
@@ -37,6 +38,7 @@ class Transactions {
       this.recipient,
       this.amount,
       this.fee,
+      this.transactionHex,
       this.dateCreated,
       this.broadcasted});
 
@@ -45,6 +47,7 @@ class Transactions {
     recipient = json['recipient'];
     amount = json['amount'];
     fee = json['fee'];
+    transactionHex = json['transaction hex'];
     dateCreated = json['date created'];
     broadcasted = json['broadcasted'];
   }
@@ -55,6 +58,7 @@ class Transactions {
     data['recipient'] = this.recipient;
     data['amount'] = this.amount;
     data['fee'] = this.fee;
+    data['transaction hex'] = this.transactionHex;
     data['date created'] = this.dateCreated;
     data['broadcasted'] = this.broadcasted;
     return data;

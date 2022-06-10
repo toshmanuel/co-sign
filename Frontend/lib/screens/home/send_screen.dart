@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/controllers/controllers.dart';
+import 'package:frontend/screens/home/home.dart';
 import 'package:frontend/utils/utils.dart';
 import 'package:frontend/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -72,7 +73,7 @@ class _SendScreenState extends State<SendScreen> {
                           ),
                         ),
                         onTap: () {
-                          goBack(context);
+                          Navigator.pushNamed(context, HomeScreen.id);
                         },
                       ),
                       Text(
@@ -169,8 +170,14 @@ class _SendScreenState extends State<SendScreen> {
                     onPressed: () async {
                       await _transactionController
                           .createTransactionQuery(createTransVariable());
+                      {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const HomeScreen()));
+                      }
                     },
-                    text: Text('Create Transaction',
+                    text: Text('Sign Transaction',
                         style: AppTextStyle.textSize21
                             .copyWith(color: AppColors.whiteColor)),
                     height: 60,

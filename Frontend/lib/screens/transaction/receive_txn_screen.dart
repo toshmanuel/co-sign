@@ -96,26 +96,7 @@ class _ReceiveTnxScreenState extends State<ReceiveTnxScreen> {
                             RichText(
                               textAlign: TextAlign.left,
                               text: TextSpan(
-                                text: 'Broadcasted: ',
-                                style: AppTextStyle.textSize13.copyWith(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                                children: [
-                                  TextSpan(
-                                    text: transaction?.broadcasted.toString() ??
-                                        '',
-                                    style: AppTextStyle.textSize13.copyWith(
-                                      color: AppColors.lightNeutral,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Height3(),
-                            RichText(
-                              textAlign: TextAlign.left,
-                              text: TextSpan(
-                                text: 'ID: ',
+                                text: 'Txn ID: ',
                                 style: AppTextStyle.textSize13.copyWith(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.bold),

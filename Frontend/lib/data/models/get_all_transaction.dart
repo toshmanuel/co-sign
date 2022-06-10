@@ -26,25 +26,31 @@ class GetAllTransactions {
 
 class Transactions {
   int? id;
+  String? transactionId;
   String? recipient;
   int? amount;
   int? fee;
+  String? transactionHex;
   String? dateCreated;
   bool? broadcasted;
 
   Transactions(
       {this.id,
+      this.transactionId,
       this.recipient,
       this.amount,
       this.fee,
+      this.transactionHex,
       this.dateCreated,
       this.broadcasted});
 
   Transactions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    transactionId = json['transaction id'];
     recipient = json['recipient'];
     amount = json['amount'];
     fee = json['fee'];
+    transactionHex = json['transaction hex'];
     dateCreated = json['date created'];
     broadcasted = json['broadcasted'];
   }
@@ -52,9 +58,11 @@ class Transactions {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['transaction id'] = this.transactionId;
     data['recipient'] = this.recipient;
     data['amount'] = this.amount;
     data['fee'] = this.fee;
+    data['transaction hex'] = this.transactionHex;
     data['date created'] = this.dateCreated;
     data['broadcasted'] = this.broadcasted;
     return data;

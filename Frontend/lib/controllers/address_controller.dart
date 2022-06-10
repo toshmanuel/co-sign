@@ -22,7 +22,6 @@ class AddressController extends GetxController {
         await SharedPreferences.getInstance();
     userToken = localStorage.getString(tokenResponse);
   }
-
   Future<String> generateAddressQuery(
       Map<String, dynamic> generateAddressDetails) async {
     await getCurrentToken();
@@ -30,15 +29,12 @@ class AddressController extends GetxController {
     const endPoint = '$baseUrl/generateaddress/';
     final response = await _coSignApi.post(endPoint,
         body: generateAddressDetails, token: userToken);
-
     if (response?.statusCode == 200) {
       final generateAddresses = GenerateAddresses.fromJson(response!.data);
       final address = generateAddresses.address;
       isLoading = false;
-
       return Future.value(address);
     }
-
     return Future.value('');
   }
 
@@ -62,13 +58,11 @@ class AddressController extends GetxController {
     update();
     const endPoint = '$baseUrl/addresslist/';
     final response = await _coSignApi.get(endPoint, token: userToken);
-
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
       addressList = AddressList.fromJson(response!.data);
     }
-
     return addressList;
   }
 
@@ -90,18 +84,14 @@ class AddressController extends GetxController {
     getCurrentToken();
     isLoading = true;
     update();
-
     const endPoint = '$baseUrl/generatenewaddress/';
     final response = await _coSignApi.get(endPoint, token: userToken);
-
     if (response?.statusCode == 200) {
       isLoading = false;
       update();
       getNewAddress = GetNewAddress.fromJson(response!.data);
-
       return getNewAddress?.address;
     }
-
     return null;
   }
 }

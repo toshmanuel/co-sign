@@ -18,7 +18,6 @@ class AuthenticationController extends GetxController {
     update();
     try {
       const endPoint = '$baseUrl/register/';
-
       final response = await _coSignApi.post(endPoint, body: signUpDetails);
       if (response?.statusCode == 201) {
         userRegister = UserRegister.fromJson(response!.data);
@@ -26,7 +25,6 @@ class AuthenticationController extends GetxController {
         update();
         return Future.value(true);
       }
-
       isLoading = false;
       return Future.value(true);
     } catch (e) {
@@ -42,19 +40,15 @@ class AuthenticationController extends GetxController {
   Future<bool> signInQuery(Map<String, dynamic> signInDetails) async {
     setLoading(true);
     update();
-
     try {
       const endPoint = '$baseUrl/login/';
       final response = await _coSignApi.post(endPoint, body: signInDetails);
-
       if (response?.statusCode == 200) {
         userLogin = UserLogin.fromJson(response!.data);
         await AuthServices.getInstance
             .saveUserDetails(userLogin, isLogin: true);
-
         setLoading(false);
         update();
-
         return Future.value(true);
       }
 
@@ -63,7 +57,6 @@ class AuthenticationController extends GetxController {
     } catch (e) {
       setLoading(false);
       update();
-
       return Future.value(false);
     }
   }
